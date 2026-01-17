@@ -1,0 +1,200 @@
+:: StoryInit
+
+/*游戏系统*/
+/*时间*/
+<<set $minute = 0>>
+<<set $hour = 8>>
+<<set $day = 1>>
+<<set $weekDay = 1>>
+<<set $month = 1>>
+<<set $year = 1>>
+<<set $formattedMinute = 0>>
+<<set $showHour = 8>>
+
+
+/*游戏设置*/
+
+/*是否允许特殊npc*/
+<<set $AllowSpeacialNPCs = true>>
+<<set $AllowMiles = true>>
+<<set $AllowTerald = true>>
+<<set $AllowRed = true>>
+
+
+/*玩家信息*/
+
+/*名字*/
+<<set $PlayerName = "">>
+/*姓氏*/
+<<set $PlayerLastName = "">>
+/*性别-true为男false为女*/
+<<set $PlayerGenderBoy = true>>
+/*是否是哨兵*/
+<<set $PlayerSentinel = false>>
+/*是否是向导*/
+<<set $PlayerGuide = false>>
+/*体型*/
+<<set $PlayerSize=0>>
+/*发色*/
+<<set $PlayerHairColor = "">>
+/*瞳色*/
+<<set $PlayerEyeColor = "">>
+/*肤色*/
+<<set $PlayerSkinColor = "">>
+/*塔的评级*/
+<<set $PlayerRecordedLevel=0>>
+/*实际应评级*/
+<<set $PlayerActualLevel=0>>
+/*职位为学员/外勤/后勤/教官*/
+<<set $PlayerClass=0>>
+/*已获取的特质列表*/
+<<set $GainedTraits = []>>
+
+
+
+/*数值*/
+
+/*基础能力数值*/
+/*外貌*/
+<<set $Appearance=0>>
+/*共情力*/
+<<set $Empathy=0>>
+/*魅力*/
+<<set $Charisma=0>>
+/*意志力*/
+<<set $Willpower=0>>
+/*精神强度*/
+<<set $Resilience=0>>
+/*智力*/
+<<set $Intelligence=0>>
+/*感知*/
+<<set $Perception=0>>
+/*学习力*/
+<<set $Aptitude=0>>
+/*体能*/
+<<set $Endurance=0>>
+/*速度*/
+<<set $Speed=0>>
+/*力量*/
+<<set $Strength=0>>
+/*哨向特有数值*/
+/*精神力上限*/
+<<set $SpiritualPowerLimit=0>>
+/*现存精神力*/
+<<set $SpiritualPowerRemain=0>>
+
+/*技能水平*/
+/*精神链接*/
+<<set $PsychicBondSkillLevel=0>>
+/*枪械*/
+<<set $GunSkillLevel=0>>
+/*格斗*/
+<<set $FightSkillLevel=0>>
+/*策略*/
+<<set $StrategySkillLevel=0>>
+/*侦查*/
+<<set $ScoutingSkillLevel=0>>
+/*医疗急救*/
+<<set $RescueSkillLevel=0>>
+/*社交*/
+<<set $CommunicateSkillLevel=0>>
+/*情绪控制*/
+<<set $CalmSkillLevel=0>>
+
+/*个人状态*/
+/*压力*/
+<<set $Stress=0>>
+/*镇定*/
+<<set $Calm=10000>>
+/*疼痛*/
+<<set $Hurt=0>>
+/*健康*/
+<<set $Health=4000>>
+/*疲劳*/
+<<set $Tired=0>>
+/*创伤*/
+<<set $Trauma=0>>
+
+
+/*精神体*/
+/*精神体名字*/
+<<set $SpiritAnimalName = "">>
+/*精神体量词-其实我也不知道为什么我一定要自定义它*/
+<<set $SpiritAnimalWord = "只">>
+/*精神体种族*/
+<<set $SpiritAnimalClass = "">>
+/*是否靠足行走/有翼可飞行/游泳/蜿蜒爬行/有触手/其他*/
+<<set $SpiritAnimalMoving=0>>
+/*是否能漂浮*/
+<<set $SpiritAnimalFloating = false>>
+/*是否有毒/可放电/可致幻/可麻痹*/
+<<set $SpiritAnimalAbility=0>>
+/*是否是传说中的生物*/
+<<set $SpiritAnimalLegend = false>>
+/*是否有正面战斗能力*/
+<<set $SpiritAnimalAttack = true>>
+/*是否可隐秘作战*/
+<<set $SpiritAnimalAssassin = false>>
+/*是否有侦查能力*/
+<<set $SpiritAnimalScout = false>>
+/*是否有治愈能力*/
+<<set $SpiritAnimalHeal=0>>
+
+
+/*社交与声望*/
+
+/*玩家友好度*/
+<<set $PlayerFriendliness=0>>
+/*玩家善良度*/
+<<set $PlayerKindness=0>>
+/*玩家是否始终保持同一态度*/
+<<set $PlayerKeepSameAttitude = true>>
+/*玩家默认态度-普通/温和/热情/暴躁/冷淡*/
+<<set $PlayerDefaultAttitude=0>>
+
+/*玩家声望*/
+<<set $PlayerReputation=0>>
+
+/*玩家与精神体好感度*/
+<<set $FriendshipSpiritAnimal=20>>
+
+/*特殊npc*/
+/*Miles*/
+<<set $FriendshipMiles=0>>/*好感度*/
+<<set $RespectMiles=0>>/*尊敬*/
+<<set $HealthLimitMiles=3200>>/*生命值上限*/
+<<set $HealthMiles=3200>>/*生命值*/
+<<set $FightSkillMiles=40>>/*战斗力*/
+<<set $LevelMiles = "A">>/*目前评级*/
+<<set $ClassMiles = "学员">>/*目前职位*/
+<<set $PlayerHaveMetMiles = false>>/*玩家是否遇见过Miles*/
+<<set $PlayerIsTeacherOfMiles = false>>/*玩家是否是Miles的老师*/
+/*Terald*/
+<<set $FriendshipTerald=0>>/*好感度*/
+<<set $TraumaTerald=0>>/*创伤*/
+<<set $HealthLimitTerald=2800>>/*生命值上限*/
+<<set $HealthTerald=2800>>/*生命值*/
+<<set $SpiritualPowerLimitTerald=6000>>/*精神力上限*/
+<<set $SpiritualPowerRemainTerald=6000>>/*现存精神力*/
+<<set $SuspenseByTowerTerald=0>>/*塔的怀疑*/
+<<set $LevelTerald = "B">>/*目前评级*/
+<<set $PlayerHaveMetTerald = false>>/*玩家是否遇见过Terald*/
+<<set $PlayerIsStudentOfTerald = false>>/*玩家是否是Terald的学生*/
+<<set $TowerNoticed = false>>/*塔是否已确定怀疑*/
+/*秦昭*/
+<<set $FriendshipRed=0>>/*好感度*/
+<<set $HealthLimitRed=3200>>/*生命值上限*/
+<<set $HealthRed=3200>>/*生命值*/
+<<set $LevelRed = "A">>/*目前评级*/
+
+/*训练场*/
+/*是否进入过训练场*/
+<<set $PlayerHaveEnteredTrainingCamp = false>>
+/*是否已取得专门招收哨兵学员资格*/
+<<set $PlayerIsExperiencedSentinelTeacher = false>>
+/*是否已取得专门招收向导学员资格*/
+<<set $PlayerIsExperiencedGuideTeacher = false>>
+/*临时代哨兵课次数*/
+<<set $PlayerWorkAsSupplySentinelTeacher=0>>
+/*临时代向导课次数*/
+<<set $PlayerWorkAsSupplyGuideTeacher=0>>

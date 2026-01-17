@@ -1,0 +1,50 @@
+:: StoryStylesheet [stylesheet]
+/*——————详细信息——————*/
+/* 容器布局:左右结构 */
+.npc-info {
+	flex: 1 1 100%;
+	display: flex;
+	flex-direction: column;
+}
+/* 通用信息块样式 */
+.npc-info-block {
+	background-color: #1a1a1a;
+	border: 2px solid #4a4a4a;
+	border-radius: 10px;
+	padding: 0.75rem 1rem;
+	backdrop-filter: blur(2px);
+}
+/* 每个板块标题 */
+.npc-info-block h3 {
+	font-size: 1.1em;
+	border-bottom: 1px solid #555;
+	font-weight: bold;
+	color: #ffffff;
+}
+details.npc-info-block {
+	background-color: #141414;
+	transition: all 0.3s ease-in-out;
+}
+details[open] {
+	background-color: #222222;
+	border-color: #5a5a5a;
+}
+details summary {
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 1.05em;
+	border-bottom: 1px solid #555;
+	color: #ffffff;
+}
+details summary::-webkit-details-marker {
+	display: none; /* 隐藏默认小箭头 */
+}
+/* 可自定义箭头或装饰 */
+details summary::before {
+	content: "⯈ ";
+	display: inline-block;
+	transition: transform 0.2s;
+}
+details[open] summary::before {
+	content: "⯆ ";
+}

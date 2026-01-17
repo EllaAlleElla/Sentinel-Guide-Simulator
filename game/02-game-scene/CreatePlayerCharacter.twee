@@ -1,0 +1,887 @@
+:: Tower-Register-Start
+你正在塔的行政大厅前台。
+
+“要办理身份证件？”工作人员递给你一张表单，指了指旁边的一支签字笔。
+
+“先填表吧。”
+
+[[填表|Tower-Register-Name]]
+
+:: Tower-Register-Name
+你拿起签字笔，填写表单。
+
+表上第一行写着：“姓名”。
+
+<<textbox "$PlayerName" "">>
+
+你发现还有可选的姓氏单独填写处。
+
+<span style="opacity: 0.5;">姓氏的显示格式是英文逻辑，则：名字·姓氏。中文名请直接全部填写在姓名一栏，姓氏留空即可。在填写完全部你想填写的栏位后再按确认。</span>
+
+<<textbox "$PlayerLastName" "">>
+
+<<button "确认">>
+	<<goto "Tower-Register-Gender">>
+<</button>>
+
+:: Tower-Register-Gender
+<<if $PlayerLastName === "">>
+	你填写完姓名，纸上静静地躺着几个字：<i>$PlayerName</i>。
+<<else>>
+	你填写完姓名，纸上静静地躺着几个字：<i>$PlayerName·$PlayerLastName</i>。
+<</if>>
+
+下一栏是性别。
+
+<span style="opacity: 0.5;">在这个版本，你暂时不能选择特殊性别或是对塔隐瞒你的性别。</span>
+
+<<link "勾选标着男性的框">>
+	<<goto "Tower-Register-SentinelGuide">>
+<</link>>
+
+<<link "勾选标着女性的框">>
+	<<set $PlayerGenderBoy = false>>
+	<<goto "Tower-Register-SentinelGuide">>
+<</link>>
+
+:: Tower-Register-SentinelGuide
+<<if $PlayerGenderBoy === true>>
+	你确认你是男性。
+<<else>>
+	你确认你是女性。
+<</if>>
+
+“等你把所有空都填完，就把表给我。”你听到工作人员对你说话，往下看，发现单子上只剩下一栏空白了。
+
+“你是：哨兵□/向导□”
+
+<span style="opacity: 0.5;">这个版本平民路线我暂时没做，选了之后没有剧情。</span>
+
+<<link "哨兵">>
+	<<set $PlayerSentinel = true>>
+    <<goto "Tower-Register-FinishBooklet">>
+<</link>>
+
+<<link "向导">>
+	<<set $PlayerGuide = true>>
+    <<goto "Tower-Register-FinishBooklet">>
+<</link>>
+
+[[告诉工作人员你只是平民|Tower-Register-NonSG]]
+:: Tower-Register-NonSG
+<span style="opacity: 0.5;">好哥们，我是真还没写这段，你要不回去吧……</span>
+
+[[回到填完性别时，选择作为哨兵或向导生活|Tower-Register-SentinelGuide]]
+
+:: Tower-Register-FinishBooklet
+你放下笔，把填完的表单递给工作人员。
+<<if $PlayerSentinel === true>>
+	他看了一眼单子：“哨兵？行。”
+    
+    他向你伸手：“塔的能力检测报告拿来了吗？”
+    
+    <<link "拿出检测报告">>
+    	<<goto "Tower-Register-PersonalReport">>
+    <</link>>
+<<elseif $PlayerGuide === true>>
+	他看了一眼单子：“向导？挺少见。”
+    
+    他向你伸手：“塔的能力检测报告拿来了吗？”
+    
+    <<link "拿出检测报告">>
+    	<<goto "Tower-Register-PersonalReport">>
+    <</link>>
+<<else>>
+	他疑惑地看着单子：“你没写完吗？”他手指点了点那一栏空缺，“哨兵还是向导，填上。”
+    <<link "勾上哨兵">>
+    	<<set $PlayerSentinel = true>>
+        <<goto "塔内注册-略带波折完成表单">>
+    <</link>>
+    
+    <<link "勾上向导">>
+    	<<set $PlayerGuide = true>>
+        <<goto "塔内注册-略带波折完成表单">>
+    <</link>>
+    
+    <<link "告诉他你只是平民">>
+    	<<goto "Tower-Register-NonSG">>
+    <</link>>
+<</if>>
+
+:: 塔内注册-略带波折完成表单
+“还需要你的个人检测报告。”
+
+你拿出塔对你能力的检测报告。
+<span style="opacity: 0.5;">
+你可以在这个页面设置你的各种能力。
+
+目前的版本里，调整是没有限制的，你可以自由地在游戏开始时就获得全满的属性。
+
+尽管如此，这样会缺失很多游戏体验，我更推荐设置不同的长处和短处，或是从零开始。
+
+一些数据出现在官方的检测报告里可能会有槽点，但我决定先放着吧。同时，哪怕你对塔隐瞒了你的某种能力，也依然需要在这个页面如实设置，再勾选向塔隐瞒的选项……
+
+一些能力对向导来说才比较有意义（如共情力、精神链接熟练度等），但为了保证捏人自由度，对于哨兵玩家我也没有去掉调整选项。
+</span>
+<<if $PlayerLastName === "">>
+	姓名：$PlayerName
+<<else>>
+	姓名：$PlayerName·$PlayerLastName
+<</if>>
+基础能力：
+<<if $PlayerGenderBoy === true>>
+外貌：你<<listbox "$Appearance">>
+    <<option "平平无奇" 0>>
+    <<option "看起来不错" 2000>>
+    <<option "面貌周正" 4000>>
+    <<option "眉清目秀" 6000>>
+    <<option "面如冠玉" 8000>><</listbox>><<else>>
+外貌：你的长相<<listbox "$Appearance">>
+    <<option "平平无奇" 0>>
+    <<option "还不错" 2000>>
+    <<option "清秀可观" 4000>>
+    <<option "风华出众" 6000>>
+    <<option "倾世无双" 8000>><</listbox>><</if>>
+共情力：你<<listbox "$Empathy">>
+    <<option "难以共感" 0>>
+    <<option "并不冷漠" 2000>>
+    <<option "善于倾听" 4000>>
+    <<option "心细入微" 6000>>
+    <<option "对任何人都能感同身受" 8000>><</listbox>>
+魅力：<<listbox "$Charisma">>
+    <<option "你泯然众人" 0>>
+    <<option "你有些讨人喜欢" 2000>>
+    <<option "你谈吐不凡" 4000>>
+    <<option "人们总是轻易被你吸引" 6000>>
+    <<option "你的一举一动都扣人心弦" 8000>><</listbox>>
+意志力：<<listbox "$Willpower">>
+    <<option "你有些懦弱" 0>>
+    <<option "你知道忍耐" 2000>>
+    <<option "你很坚韧" 4000>>
+    <<option "你有惊人的耐性" 6000>>
+    <<option "疼痛和疲惫无法将你压垮" 8000>><</listbox>>
+精神强度：<<listbox "$Resilience">>
+    <<option "你精神脆弱" 0>>
+    <<option "你能应对生活" 2000>>
+    <<option "你比别人更加坚强" 4000>>
+    <<option "你知道如何消解创伤" 6000>>
+    <<option "没有什么能让你绝望" 8000>><</listbox>>
+智力：你<<listbox "$Intelligence">>
+    <<option "资质平平" 0>>
+    <<option "反应似乎比别人快" 2000>>
+    <<option "机敏过人" 4000>>
+    <<option "见微知著" 6000>>
+    <<option "洞若观火" 8000>><</listbox>>
+感知：你<<listbox "$Perception">>
+    <<option "后知后觉" 0>>
+    <<option "更加敏感" 2000>>
+    <<option "耳聪目明" 4000>>
+    <<option "明察秋毫" 6000>>
+    <<option "一叶知秋" 8000>><</listbox>>
+学习力：你<<listbox "$Aptitude">>
+    <<option "十分平庸" 0>>
+    <<option "偶有进步" 2000>>
+    <<option "触类旁通" 4000>>
+    <<option "闻一知十" 6000>>
+    <<option "一通百通" 8000>><</listbox>>
+体能：你<<listbox "$Endurance">>
+    <<option "略显孱弱" 0>>
+    <<option "体力尚可" 2000>>
+    <<option "精力充沛" 4000>>
+    <<option "身强体健" 6000>>
+    <<option "铁打铜铸" 8000>><</listbox>>
+速度：你<<listbox "$Speed">>
+    <<option "平平无奇" 0>>
+    <<option "步伐轻快" 2000>>
+    <<option "身手利落" 4000>>
+    <<option "身轻如燕" 6000>>
+    <<option "来去如风" 8000>><</listbox>>
+力量：你<<listbox "$Strength">>
+    <<option "力不从心" 0>>
+    <<option "有些力气" 2000>>
+    <<option "臂力过人" 4000>>
+    <<option "身强力壮" 6000>>
+    <<option "力拔山河" 8000>><</listbox>>
+精神力：<<listbox "$SpiritualPowerLimit">>
+    <<option "你的精神力似乎总不够用" 0>>
+    <<option "你购买补剂没有其他人频繁" 2000>>
+    <<option "你总留有余裕" 4000>>
+    <<option "你几乎没有耗尽过精神力" 6000>>
+    <<option "你的精神力深不见底" 8000>><</listbox>>
+
+
+技能水平：
+
+精神链接熟练度：<<listbox "$PsychicBondSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+枪械技巧：<<listbox "$GunSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+格斗技巧：<<listbox "$FightSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+侦查技巧：<<listbox "$ScoutingSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+策略规划：<<listbox "$StrategySkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+医疗急救：<<listbox "$RescueSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+语言沟通：<<listbox "$CommunicateSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+情绪控制：<<listbox "$CalmSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+    
+
+特殊能力：
+
+<span style="opacity: 0.5;">
+这一栏为特殊能力，拥有任意一项被塔知晓的特殊能力会使你的评级无条件变成S。未来版本可能会更新向塔隐瞒评级的功能，现在我把基础框架写完就差不多了……
+部分能力有机会在游戏过程中得到，其余能力只能在此页面获取。慎重决定。
+你可以获取不止一个特殊能力。
+不要问我为什么写了这么多超模的能力，问就是我习惯把我各种游戏捏的pc也搬到别的世界观里本土化玩一玩，结果原本在异能/魔法/迷之世界观里的拥有特殊能力的pc搬进哨向就有这种神奇能力了……干脆多写点拿出来给大家玩。我做这个游戏的初衷就是能在游戏里欢乐还原我pc。
+</span>
+接触净化：你可以靠物理接触在无精神链接的情况下平复图景风暴、抚平精神、净化创伤。建立精神链接的情况下，你安抚精神的能力大大加强。作为代价，每当你有意或无意地使用这个能力，你都会为你自己累积创伤，修复对方精神的难度越大、你精神链接和修复的熟练度越低，你的创伤累积速度越快。
+<<traitButton "ContactPurification">>
+
+精神图景显化：你可以将精神图景中的物质显化到现实，无需消耗精神力。当你熟练度低时，操控显化出的物质将非常困难，当熟练度足够时，你可以得心应手地操控你显化出的物质，操控的物质体积越大、结构越复杂，操作难度就越大。然而，无论你的熟练度高低，这个能力都会将你的精神力储量上限固定在原本最高的70%。
+<<traitButton "Manifestation">>
+
+精神冲击：你的精神力尖锐且锋利，让你有机会消耗精神力在无物理接触的情况下攻击他人的精神。在熟练度达到高度（约70%）后，你可以消耗精神力以刺激对方精神的形式从他人脑中取得情报，一定程度上达成读心术的效果，然而对方会察觉有人在攻击。
+<<traitButton "PsiStrike">>
+
+幻术：你可以消耗精神力将某人拉入你构建的幻境，成功率取决于对方的精神力水平、目前状态和精神图景稳定性。拙劣的设计依旧会被识破，且无论你构建幻境成功与否，你都会消耗大量精神力。付出精神力越多，幻术效果越明显，但如果你消耗的精神力达到一定量，你会在使用幻术后立刻晕倒。
+<<traitButton "Illusion">>
+
+读心术：你可以在不受察觉的情况下探测他人的想法，没有消耗或限制，不会造成伤害。在熟练度低时成功率相当低，你可以尝试消耗精神力再尝试一次。拥有其他精神系特殊能力时，你的读心术成功率会得到提高，并且每隔两小时就可以无消耗使用一次强力读心术，必定成功。面对与你同样拥有特殊能力或精神力水平足够高的人，你依然有失败风险，且有可能被察觉。
+<<traitButton "Telepathy">>
+
+黑暗哨兵：作为一个哨兵，你意志坚韧，不需要向导提供的精神调解，能适应一个人执行各种任务。作为代价，除非向导同样为极高评级，否则没有向导能承受与你建立的精神链接。
+<<traitButton "DarkSentinel">>
+
+<<link "确认">>
+	<<updatePlayerLevel>>
+	<<goto "Tower-Register-PersonalReportConfirm">>
+<</link>>
+
+:: Tower-Register-PersonalReport
+你拿出塔对你能力的检测报告。
+<span style="opacity: 0.5;">
+你可以在这个页面设置你的各种能力。
+
+目前的版本里，调整是没有限制的，你可以自由地在游戏开始时就获得全满的属性。
+
+尽管如此，这样会缺失很多游戏体验，我更推荐设置不同的长处和短处，或是从零开始。
+
+一些数据出现在官方的检测报告里可能会有槽点，但我决定先放着吧。同时，哪怕你对塔隐瞒了你的某种能力，也依然需要在这个页面如实设置，再勾选向塔隐瞒的选项……
+
+一些能力对向导来说才比较有意义（如共情力、精神链接熟练度等），但为了保证捏人自由度，对于哨兵玩家我也没有去掉调整选项。
+</span>
+<<if $PlayerLastName === "">>
+	姓名：$PlayerName
+<<else>>
+	姓名：$PlayerName·$PlayerLastName
+<</if>>
+基础能力：
+<<if $PlayerGenderBoy === true>>
+外貌：你<<listbox "$Appearance">>
+    <<option "平平无奇" 0>>
+    <<option "看起来不错" 2000>>
+    <<option "面貌周正" 4000>>
+    <<option "眉清目秀" 6000>>
+    <<option "面如冠玉" 8000>><</listbox>><<else>>
+外貌：你的长相<<listbox "$Appearance">>
+    <<option "平平无奇" 0>>
+    <<option "还不错" 2000>>
+    <<option "清秀可观" 4000>>
+    <<option "风华出众" 6000>>
+    <<option "倾世无双" 8000>><</listbox>><</if>>
+共情力：你<<listbox "$Empathy">>
+    <<option "难以共感" 0>>
+    <<option "并不冷漠" 2000>>
+    <<option "善于倾听" 4000>>
+    <<option "心细入微" 6000>>
+    <<option "对任何人都能感同身受" 8000>><</listbox>>
+魅力：<<listbox "$Charisma">>
+    <<option "你泯然众人" 0>>
+    <<option "你有些讨人喜欢" 2000>>
+    <<option "你谈吐不凡" 4000>>
+    <<option "人们总是轻易被你吸引" 6000>>
+    <<option "你的一举一动都扣人心弦" 8000>><</listbox>>
+意志力：<<listbox "$Willpower">>
+    <<option "你有些懦弱" 0>>
+    <<option "你知道忍耐" 2000>>
+    <<option "你很坚韧" 4000>>
+    <<option "你有惊人的耐性" 6000>>
+    <<option "疼痛和疲惫无法将你压垮" 8000>><</listbox>>
+精神强度：<<listbox "$Resilience">>
+    <<option "你精神脆弱" 0>>
+    <<option "你能应对生活" 2000>>
+    <<option "你比别人更加坚强" 4000>>
+    <<option "你知道如何消解创伤" 6000>>
+    <<option "没有什么能让你绝望" 8000>><</listbox>>
+智力：你<<listbox "$Intelligence">>
+    <<option "资质平平" 0>>
+    <<option "反应似乎比别人快" 2000>>
+    <<option "机敏过人" 4000>>
+    <<option "见微知著" 6000>>
+    <<option "洞若观火" 8000>><</listbox>>
+感知：你<<listbox "$Perception">>
+    <<option "后知后觉" 0>>
+    <<option "更加敏感" 2000>>
+    <<option "耳聪目明" 4000>>
+    <<option "明察秋毫" 6000>>
+    <<option "一叶知秋" 8000>><</listbox>>
+学习力：你<<listbox "$Aptitude">>
+    <<option "十分平庸" 0>>
+    <<option "偶有进步" 2000>>
+    <<option "触类旁通" 4000>>
+    <<option "闻一知十" 6000>>
+    <<option "一通百通" 8000>><</listbox>>
+体能：你<<listbox "$Endurance">>
+    <<option "略显孱弱" 0>>
+    <<option "体力尚可" 2000>>
+    <<option "精力充沛" 4000>>
+    <<option "身强体健" 6000>>
+    <<option "铁打铜铸" 8000>><</listbox>>
+速度：你<<listbox "$Speed">>
+    <<option "平平无奇" 0>>
+    <<option "步伐轻快" 2000>>
+    <<option "身手利落" 4000>>
+    <<option "身轻如燕" 6000>>
+    <<option "来去如风" 8000>><</listbox>>
+力量：你<<listbox "$Strength">>
+    <<option "力不从心" 0>>
+    <<option "有些力气" 2000>>
+    <<option "臂力过人" 4000>>
+    <<option "身强力壮" 6000>>
+    <<option "力拔山河" 8000>><</listbox>>
+精神力：<<listbox "$SpiritualPowerLimit">>
+    <<option "你的精神力似乎总不够用" 0>>
+    <<option "你购买补剂没有其他人频繁" 2000>>
+    <<option "你总留有余裕" 4000>>
+    <<option "你几乎没有耗尽过精神力" 6000>>
+    <<option "你的精神力深不见底" 8000>><</listbox>>
+
+
+技能水平：
+
+精神链接熟练度：<<listbox "$PsychicBondSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+枪械技巧：<<listbox "$GunSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+格斗技巧：<<listbox "$FightSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+侦查技巧：<<listbox "$ScoutingSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+策略规划：<<listbox "$StrategySkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+医疗急救：<<listbox "$RescueSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+语言沟通：<<listbox "$CommunicateSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+情绪控制：<<listbox "$CalmSkillLevel">>
+    <<option "D" 0>>
+    <<option "C" 20>>
+    <<option "B" 40>>
+    <<option "A" 60>>
+    <<option "S" 80>><</listbox>>
+    
+
+特殊能力：
+
+<span style="opacity: 0.5;">
+这一栏为特殊能力，拥有任意一项被塔知晓的特殊能力会使你的评级无条件变成S。未来版本可能会更新向塔隐瞒评级的功能，现在我把基础框架写完就差不多了……
+部分能力有机会在游戏过程中得到，其余能力只能在此页面获取。慎重决定。
+你可以获取不止一个特殊能力。
+不要问我为什么写了这么多超模的能力，问就是我习惯把我各种游戏捏的pc也搬到别的世界观里本土化玩一玩，结果原本在异能/魔法/迷之世界观里的拥有特殊能力的pc搬进哨向就有这种神奇能力了……干脆多写点拿出来给大家玩。我做这个游戏的初衷就是能在游戏里欢乐还原我pc。
+</span>
+接触净化：你可以靠物理接触在无精神链接的情况下平复图景风暴、抚平精神、净化创伤。建立精神链接的情况下，你安抚精神的能力大大加强。作为代价，每当你有意或无意地使用这个能力，你都会为你自己累积创伤，修复对方精神的难度越大、你精神链接和修复的熟练度越低，你的创伤累积速度越快。
+<<traitButton "ContactPurification">>
+
+精神图景显化：你可以将精神图景中的物质显化到现实，无需消耗精神力。当你熟练度低时，操控显化出的物质将非常困难，当熟练度足够时，你可以得心应手地操控你显化出的物质，操控的物质体积越大、结构越复杂，操作难度就越大。然而，无论你的熟练度高低，这个能力都会将你的精神力储量上限固定在原本最高的70%。
+<<traitButton "Manifestation">>
+
+精神冲击：你的精神力尖锐且锋利，让你有机会消耗精神力在无物理接触的情况下攻击他人的精神。在熟练度达到高度（约70%）后，你可以消耗精神力以刺激对方精神的形式从他人脑中取得情报，一定程度上达成读心术的效果，然而对方会察觉有人在攻击。
+<<traitButton "PsiStrike">>
+
+幻术：你可以消耗精神力将某人拉入你构建的幻境，成功率取决于对方的精神力水平、目前状态和精神图景稳定性。拙劣的设计依旧会被识破，且无论你构建幻境成功与否，你都会消耗大量精神力。付出精神力越多，幻术效果越明显，但如果你消耗的精神力达到一定量，你会在使用幻术后立刻晕倒。
+<<traitButton "Illusion">>
+
+读心术：你可以在不受察觉的情况下探测他人的想法，没有消耗或限制，不会造成伤害。在熟练度低时成功率相当低，你可以尝试消耗精神力再尝试一次。拥有其他精神系特殊能力时，你的读心术成功率会得到提高，并且每隔两小时就可以无消耗使用一次强力读心术，必定成功。面对与你同样拥有特殊能力或精神力水平足够高的人，你依然有失败风险，且有可能被察觉。
+<<traitButton "Telepathy">>
+
+黑暗哨兵：作为一个哨兵，你意志坚韧，不需要向导提供的精神调解，能适应一个人执行各种任务。作为代价，除非向导同样为极高评级，否则没有向导能承受与你建立的精神链接。
+<<traitButton "DarkSentinel">>
+
+<<link "确认">>
+	<<updatePlayerLevel>>
+	<<goto "Tower-Register-PersonalReportConfirm">>
+<</link>>
+
+:: Tower-Register-PersonalReportConfirm
+根据这份检测报告，你应该被塔评级为$PlayerRecordedLevel。确定吗？
+
+[[确定|Tower-Register-PersonalReportConfirmComplete]]
+
+[[返回更改检测报告|Tower-Register-PersonalReport]]
+
+:: Tower-Register-PersonalReportConfirmComplete
+<<if $PlayerRecordedLevel === "S">>\
+	工作人员最开始只是轻飘飘扫了一眼你的报告，然而看见页尾评级的下一秒就呆住了。
+    
+    “您……您的报告没问题吧？”他问。
+    
+    你向他确认，他瞬间变得毕恭毕敬：“非常抱歉，刚刚没认出您。”他双手把报告交还给你。
+    
+    “还需要您的精神体数据。”
+    
+    <<link "提交精神体数据">>
+    	<<goto "Tower-Register-SpiritAnimalData">>
+    <</link>>
+	<<elseif $PlayerRecordedLevel === "A">>\
+    工作人员最开始只是轻飘飘扫了一眼你的报告，但在看见页尾的评级后，他看向你的目光中多出了几分尊敬。
+    
+    “你是A级，是吧？挺厉害的。”他把报告交还给你。
+    
+    “还需要精神体数据。”他伸手。
+    
+    <<link "提交精神体数据">>
+    	<<goto "Tower-Register-SpiritAnimalData">>
+    <</link>>
+	<<elseif $PlayerRecordedLevel === "D">>\
+    工作人员扫了一眼你的报告，看见页尾的评级后，他皱眉：“D级，没错吗？”
+    
+    你确认没问题。
+    
+    他把报告还给你：“你是学员，还是正准备去出任务？”
+    
+    <<link "学员">>
+    	<<goto "Tower-Register-D-Student">>
+    <</link>>
+    
+    <<link "准备出任务">>
+    	<<goto "Tower-Register-D-OtherClass">>
+    <</link>>
+	<<else>>\
+    工作人员扫了一眼你的报告，之后平平无奇地点点头，把报告还给你。
+    
+    “还有精神体数据。”他伸手。
+    
+    <<link "提交精神体数据">>
+    	<<goto "Tower-Register-SpiritAnimalData">>
+    <</link>>
+<</if>>\
+
+:: Tower-Register-D-Student
+他的神色缓和了不少：“那就没问题了。要续办你的证件，还需要精神体的数据报告。你有吗？”
+
+你拿出报告。
+
+<span style="opacity: 0.5;">你可以在这个页面设置你精神体的信息。
+
+精神体的名字可以留空。你会发现在设置名字的下半句话有两个连着的输入框，其中第一个输入框用于设置量词，第二个输入框设置种族。
+
+游戏内与种族相关的判定全部依赖后面的选项，因此哪怕在这里填入奇怪的内容，只要后面的选项符合你精神体的表现，就大概率不会出戏。</span>
+
+你的精神体名叫<<textbox "$SpiritAnimalName" "">>，它是一<<textbox "$SpiritAnimalWord" "只">><<textbox "$SpiritAnimalClass" "">>。
+
+它<<listbox "$SpiritAnimalMoving">>
+	<<option "靠足行走" 0>>
+	<<option "靠翼飞行" 1>>
+	<<option "靠游泳行动" 2>>
+	<<option "蜿蜒爬行" 3>>
+	<<option "靠触手攀爬" 4>>
+	<<option "靠特殊的方式移动" 5>><</listbox>>，并且<<listbox "$SpiritAnimalFloating">>
+    	<<option "不能漂浮在空中" false>>
+   		<<option "可以漂浮在空中" true>><</listbox>>。
+
+它<<listbox "$SpiritAnimalAbility">>
+	<<option "可以靠毒素致伤" 0>>
+	<<option "可以靠电流致伤" 1>>
+	<<option "可以致幻敌人" 2>>
+	<<option "可以麻痹敌人" 3>>
+    <<option "没有特别的能力" 4>><</listbox>>，<<listbox "$SpiritAnimalLegend">>
+  		<<option "尽管它不是传说中的生物，它也很厉害" false>>
+    	<<option "并且还是传说现世" true>><</listbox>>。
+
+它<<listbox "$SpiritAnimalAttack">>
+	<<option "有" true>>
+	<<option "没有" false>><</listbox>>正面作战的能力，<<listbox "$SpiritAnimalAssassin">>
+		<<option "能够" true>>
+		<<option "不能" false>><</listbox>>潜入作战，<<listbox "$SpiritAnimalScout">>
+			<<option "可以" true>>
+			<<option "不能" false>><</listbox>>执行侦查任务，<<listbox "$SpiritAnimalHeal">>
+				<<option "没有治愈能力" 0>>
+                <<option "可以治愈身体创伤" 1>>
+                <<option "可以治愈精神创伤" 2>>
+				<<option "身体和精神的创伤都可以治愈" 3>><</listbox>>。
+
+<<link "确认">>
+	<<goto "Tower-Register-D-Complete">>
+<</link>>
+
+:: Tower-Register-D-OtherClass
+他狐疑地看着你：“正式成员？什么职务？”
+
+<span style="opacity: 0.5;">外勤人员会接受塔分配的各种任务，外出侦查、战斗或潜入。</span>
+    
+<<link "告诉他你是外勤">>
+   	<<set $PlayerClass=1>>
+   	<<goto "Tower-Register-D-SpiritAnimalData">>
+<</link>>
+    
+<span style="opacity: 0.5;">后勤人员留住塔内，一般不会外出。他们负责治疗、警戒等职能。</span>
+    
+<<link "告诉他你是后勤">>
+   	<<set $PlayerClass=2>>
+	<<goto "Tower-Register-D-SpiritAnimalData">>
+<</link>>
+    
+<span style="opacity: 0.5;">教官也是一种职务，顾名思义，负责教授塔内的学员各种技能。但成为教官有能力要求，没有任何一个D级成员有资格成为教官。</span>
+
+:: Tower-Register-D-SpiritAnimalData
+他看起来不太相信，但依然没有反驳：“好吧。把精神体的数据报告也交一下。”
+
+你拿出报告。
+
+<span style="opacity: 0.5;">你可以在这个页面设置你精神体的信息。
+
+精神体的名字可以留空。你会发现在设置名字的下半句话有两个连着的输入框，其中第一个输入框用于设置量词，第二个输入框设置种族。
+
+游戏内与种族相关的判定全部依赖后面的选项，因此哪怕在这里填入奇怪的内容，只要后面的选项符合你精神体的表现，就大概率不会出戏。</span>
+
+你的精神体名叫<<textbox "$SpiritAnimalName" "">>，它是一<<textbox "$SpiritAnimalWord" "只">><<textbox "$SpiritAnimalClass" "">>。
+
+它<<listbox "$SpiritAnimalMoving">>
+	<<option "靠足行走" 0>>
+	<<option "靠翼飞行" 1>>
+	<<option "靠游泳行动" 2>>
+	<<option "蜿蜒爬行" 3>>
+	<<option "靠触手攀爬" 4>>
+	<<option "靠特殊的方式移动" 5>><</listbox>>，并且<<listbox "$SpiritAnimalFloating">>
+    	<<option "不能漂浮在空中" false>>
+   		<<option "可以漂浮在空中" true>><</listbox>>。
+
+它<<listbox "$SpiritAnimalAbility">>
+	<<option "可以靠毒素致伤" 0>>
+	<<option "可以靠电流致伤" 1>>
+	<<option "可以致幻敌人" 2>>
+	<<option "可以麻痹敌人" 3>>
+    <<option "没有特别的能力" 4>><</listbox>>，<<listbox "$SpiritAnimalLegend">>
+  		<<option "尽管它不是传说中的生物，它也很厉害" false>>
+    	<<option "并且还是传说现世" true>><</listbox>>。
+
+它<<listbox "$SpiritAnimalAttack">>
+	<<option "有" true>>
+	<<option "没有" false>><</listbox>>正面作战的能力，<<listbox "$SpiritAnimalAssassin">>
+		<<option "能够" true>>
+		<<option "不能" false>><</listbox>>潜入作战，<<listbox "$SpiritAnimalScout">>
+			<<option "可以" true>>
+			<<option "不能" false>><</listbox>>执行侦查任务，<<listbox "$SpiritAnimalHeal">>
+				<<option "没有治愈能力" 0>>
+                <<option "可以治愈身体创伤" 1>>
+                <<option "可以治愈精神创伤" 2>>
+				<<option "身体和精神的创伤都可以治愈" 3>><</listbox>>。
+
+<<link "确认">>
+	<<goto "Tower-Register-D-Complete">>
+<</link>>
+
+:: Tower-Register-D-Complete
+他收下你的报告。“证件续完了。”你意识到可以走了。
+
+不过他态度是真的不算好。你打算……
+
+<span style="opacity: 0.5;">下面的选项会决定你在社交中表现出的性格。目前的版本里，你暂时还不能在不同的情境下展现不同的个性。</span>
+
+    <<link "普通地对待他">>
+        <<set $PlayerDefaultAttitude=0>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "表现得友好">>
+        <<set $PlayerDefaultAttitude=1>>
+        <<set $PlayerFriendliness+=2>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "表现得热情">>
+        <<set $PlayerDefaultAttitude=2>>
+        <<set $PlayerFriendliness+=5>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "给他一个教训">>
+        <<set $PlayerDefaultAttitude=3>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "表现得冷淡">>
+        <<set $PlayerDefaultAttitude=4>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+:: Tower-Register-SpiritAnimalData
+<span style="opacity: 0.5;">你可以在这个页面设置你精神体的信息。
+
+精神体的名字可以留空。你会发现在设置名字的下半句话有两个连着的输入框，其中第一个输入框用于设置量词，第二个输入框设置种族。
+
+游戏内与种族相关的判定全部依赖后面的选项，因此哪怕在这里填入奇怪的内容，只要后面的选项符合你精神体的表现，就大概率不会出戏。</span>
+
+你的精神体名叫<<textbox "$SpiritAnimalName" "">>，它是一<<textbox "$SpiritAnimalWord" "只">><<textbox "$SpiritAnimalClass" "">>。
+
+它<<listbox "$SpiritAnimalMoving">>
+	<<option "靠足行走" 0>>
+	<<option "靠翼飞行" 1>>
+	<<option "靠游泳行动" 2>>
+	<<option "蜿蜒爬行" 3>>
+	<<option "靠触手攀爬" 4>>
+	<<option "靠特殊的方式移动" 5>><</listbox>>，并且<<listbox "$SpiritAnimalFloating">>
+    	<<option "不能漂浮在空中" false>>
+   		<<option "可以漂浮在空中" true>><</listbox>>。
+
+它<<listbox "$SpiritAnimalAbility">>
+	<<option "可以靠毒素致伤" 0>>
+	<<option "可以靠电流致伤" 1>>
+	<<option "可以致幻敌人" 2>>
+	<<option "可以麻痹敌人" 3>>
+    <<option "没有特别的能力" 4>><</listbox>>，<<listbox "$SpiritAnimalLegend">>
+  		<<option "尽管它不是传说中的生物，它也很厉害" false>>
+    	<<option "并且还是传说现世" true>><</listbox>>。
+
+它<<listbox "$SpiritAnimalAttack">>
+	<<option "有" true>>
+	<<option "没有" false>><</listbox>>正面作战的能力，<<listbox "$SpiritAnimalAssassin">>
+		<<option "能够" true>>
+		<<option "不能" false>><</listbox>>潜入作战，<<listbox "$SpiritAnimalScout">>
+			<<option "可以" true>>
+			<<option "不能" false>><</listbox>>执行侦查任务，<<listbox "$SpiritAnimalHeal">>
+				<<option "没有治愈能力" 0>>
+                <<option "可以治愈身体创伤" 1>>
+                <<option "可以治愈精神创伤" 2>>
+				<<option "身体和精神的创伤都可以治愈" 3>><</listbox>>。
+
+<<link "确认">>
+	<<goto "Tower-Register-SpiritAnimalDataConfirm">>
+<</link>>
+
+:: Tower-Register-SpiritAnimalDataConfirm
+<<if $SpiritAnimalName === "">>
+	你提交关于你精神体的报告。
+	<<else>>
+    你提交$SpiritAnimalName的报告。
+<</if>>
+<<if $PlayerRecordedLevel === "S">>\
+	工作人员收下你提交的报告：“您接下来告诉我一声您的职位，证件就续完了！”
+    
+    <span style="opacity: 0.5;">外勤人员会接受塔分配的各种任务，外出侦查、战斗或潜入。</span>
+    
+    <<link "告诉他你是外勤">>
+    	<<set $PlayerClass=1>>
+    	<<goto "Tower-Register-Complete">>
+    <</link>>
+    
+    <span style="opacity: 0.5;">后勤人员留住塔内，一般不会外出。他们负责治疗、警戒等职能。</span>
+    
+    <<link "告诉他你是后勤">>
+    	<<set $PlayerClass=2>>
+    	<<goto "Tower-Register-Complete">>
+    <</link>>
+    
+    <span style="opacity: 0.5;">学员会在塔内的训练营跟随教官学习各种技能。哨兵的课程多为战斗、体能、感知，向导则多与精神力的使用技巧相关。</span>
+    
+    <span style="opacity: 0.5;">教官则顾名思义，负责教授塔内的学员各种技能。由于你已经是S评级了，不再可能作为学员回去训练，但你依然可以前往训练场。</span>
+    
+    <<link "告诉他你是教官">>
+    	<<set $PlayerClass=3>>
+    	<<goto "Tower-Register-Complete">>
+    <</link>>
+	<<else>>\
+    工作人员接过报告看了一眼：“可以。报一下职位，之后证件就续完了。”
+    
+    <span style="opacity: 0.5;">学员会在塔内的训练营跟随教官学习各种技能。哨兵的课程多为战斗、体能、感知，向导则多与精神力的使用技巧相关。</span>
+    
+    <<link "告诉他你是学员">>
+    	<<set $PlayerClass=0>>
+    	<<goto "Tower-Register-Complete">>
+    <</link>>
+    
+    <span style="opacity: 0.5;">外勤人员会接受塔分配的各种任务，外出侦查、战斗或潜入。</span>
+    
+    <<link "告诉他你是外勤">>
+    	<<set $PlayerClass=1>>
+    	<<goto "Tower-Register-Complete">>
+    <</link>>
+    
+    <span style="opacity: 0.5;">后勤人员留住塔内，一般不会外出。他们负责治疗、警戒等职能。</span>
+    
+    <<link "告诉他你是后勤">>
+    	<<set $PlayerClass=2>>
+    	<<goto "Tower-Register-Complete">>
+    <</link>>
+    
+    <span style="opacity: 0.5;">教官顾名思义，负责教授塔内的学员各种技能。</span>
+    
+    <<link "告诉他你是教官">>
+    	<<set $PlayerClass=3>>
+    	<<goto "Tower-Register-Complete">>
+    <</link>>
+<</if>>\
+
+:: Tower-Register-Complete
+<<if $PlayerRecordedLevel === "S">>
+    听到你报出的职位，他看上去终于松了一口气，在电脑上打下一串字符后按下回车键：“您的证件已经续完了。预祝您生活顺利。”
+
+    见他这样的态度，你决定……
+
+    <span style="opacity: 0.5;">下面的选项会决定你在社交中表现出的性格。目前的版本里，你暂时还不能在不同的情境下展现不同的个性。</span>
+
+    <<link "普通地对待他">>
+        <<set $PlayerDefaultAttitude=0>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "表现得友好">>
+        <<set $PlayerDefaultAttitude=1>>
+        <<set $PlayerFriendliness+=2>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "表现得热情">>
+        <<set $PlayerDefaultAttitude=2>>
+        <<set $PlayerFriendliness+=5>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "给他一个教训">>
+        <<set $PlayerDefaultAttitude=3>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "表现得冷淡">>
+        <<set $PlayerDefaultAttitude=4>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<else>>\
+    你看着他在电脑键盘上敲下几个字，摁下回车：“好了，你的证件续完了。”
+
+    说完，他的目光就回到了电脑屏幕上，没再关注你，就像这里已经没有人了一样。
+
+    对于他的这种态度，你决定……
+
+    <span style="opacity: 0.5;">下面的选项会决定你在社交中表现出的性格。目前的版本里，你暂时还不能在不同的情境下展现不同的个性。</span>
+
+    <<link "普通地对待他">>
+        <<set $PlayerDefaultAttitude=0>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "表现得友好">>
+        <<set $PlayerDefaultAttitude=1>>
+        <<set $PlayerFriendliness+=2>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "表现得热情">>
+        <<set $PlayerDefaultAttitude=2>>
+        <<set $PlayerFriendliness+=5>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "他需要点教训">>
+        <<set $PlayerDefaultAttitude=3>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+
+    <<link "表现得冷淡">>
+        <<set $PlayerDefaultAttitude=4>>
+        <<goto "Tower-Register-Attitude">>
+    <</link>>
+<</if>>
+
+:: Tower-Register-Attitude
+<<if $PlayerDefaultAttitude === 0>>
+你对他的表现没什么看法，转身离开了。
+
+<<elseif $PlayerDefaultAttitude === 1 and $PlayerRecordedLevel === "S">>
+“也祝你工作顺利。”你微笑，之后离开了。转身前，你看见他震惊的表情。
+
+<<elseif $PlayerDefaultAttitude === 1>>
+“也祝你工作顺利。”你微笑着，他只是回过来看向你点了点头。你转身离开。
+
+<<elseif $PlayerDefaultAttitude === 2>>
+“好吧，很高兴和你聊天，工作顺利！”他似乎被你热情的表达震撼了，你在他的视线下转身离开。
+
+<<elseif $PlayerDefaultAttitude === 4>>
+你无所谓他表现的如何，说到底你也并没有多热情。你转身离开。
+
+<<elseif $PlayerDefaultAttitude === 3 and $PlayerRecordedLevel === "S">>
+你猛地踢了一脚前台的桌子，他吓得不敢说话。
+
+“下次记得记住不该惹谁，别在那儿见风使舵了。”你冷笑一声离去。
+
+<<else>>
+你猛地踢了一脚前台的桌子，他被吓了一跳，抬头看向你，不确定你要干什么。
+
+“下次再不正脸看人，就不是踢一下桌子那么简单了。”你冷笑一声离去。
+<</if>>
+[[先回宿舍吧|Player Dormitory]]

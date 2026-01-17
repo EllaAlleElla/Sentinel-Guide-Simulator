@@ -1,0 +1,143 @@
+:: Widgets [widget]
+
+/*便捷设置带上限的新数值*/
+<<widget "capStat">>
+    <<set _name = _args[0]>>
+    
+    /* 1. 尝试从 setup.statLimits 获取配置 */
+    <<set _limit = setup.statLimits[_name]>>
+    
+    /* 2. 确定最小值：优先使用 setup 定义，其次使用参数 _args[1]，最后默认为 0 */
+    <<set _min = (_limit ? _limit[0] : (_args[1] !== undefined ? _args[1] : 0))>>
+    
+    /* 3. 确定最大值：优先使用 setup 定义，其次使用参数 _args[2]，最后默认为 100 */
+    <<set _max = (_limit ? _limit[1] : (_args[2] !== undefined ? _args[2] : 100))>>
+    
+    /* 4. 执行限制 */
+    <<set State.variables[_name] = Math.clamp(State.variables[_name], _min, _max)>>
+<</widget>>
+
+/* 便捷改数值 */
+<<widget "setStat">>
+    <<set _name = _args[0], _amt = _args[1]>>
+    <<set State.variables[_name] += _amt>>
+    <<capStat _name>> /* 自动调用上面修改过的 capStat */
+<</widget>>
+
+/*显示数值变化*/
+<<widget "showChange">>
+    <<set _label = _args[0]>>
+    <<set _sign = _args[1]>>
+    <<set _level = _args[2]>>
+    <<set _color = _args[3] || "white">>
+    <<if _sign === "+">>
+        <<set _symbol = "+".repeat(_level)>>
+    <<else>>
+        <<set _symbol = "-".repeat(_level)>>
+    <</if>>
+    <span style="color: _color;">（_symbol _label）</span>
+<</widget>>
+
+/* 显示玩家评级 */
+<<widget "showRank">>
+    <<set _label = _args[0]>>
+    <<set _name = _args[1]>>
+    <<set _value = State.variables[_name]>>
+    <<set _percent = setup.getPercent(_name, _value)>>
+    <<set _rank = setup.getRank(_percent)>>
+    <<set _rankName = setup.getRankName(_percent)>>
+    <<set _progress = setup.getRankProgress(_percent)>>
+    <<set _color = setup.getRankColor(_percent)>>
+    <<set _max = setup.statMax[_name] || 100>>
+    
+    <div style="margin: 5px 0;">
+        <span>_label：</span>
+        <span style="color: _color; font-weight: bold;">_rank (_rankName)</span>
+        <span style="color: gray;">(_value / _max)</span>
+        <div style="background: #333; width: 100px; height: 10px; display: inline-block; vertical-align: middle;">
+            <div style="background: _color; width: _progress%; height: 100%;"></div>
+        </div>
+    </div>
+<</widget>>
+
+<<widget "countRanks">>\
+    /* 1. 初始化数据 */
+    <<set _stats = setup.rankableStats>>\
+    <<set $RankCount = {"S": 0, "A": 0, "B": 0, "C": 0, "D": 0}>>\
+    \
+    /* 2. 循环计算逻辑 */
+    <<for _name range _stats>>\
+        <<set _value = State.variables[_name]>>\
+        <<set _percent = setup.getPercent(_name, _value)>>\
+        <<set _rank = setup.getRank(_percent)>>\
+        /* 确保等级存在于统计对象中，防止意外数据导致报错 */
+        <<if $RankCount.hasOwnProperty(_rank)>>\
+            <<set $RankCount[_rank] += 1>>\
+        <</if>>\
+    <</for>>\
+    \
+    /* 3. 显示界面部分 */
+    <div class="rank-summary">
+        <span style="color: gold;">S：<<= $RankCount["S"]>></span> | 
+        <span style="color: green;">A：<<= $RankCount["A"]>></span> | 
+        <span style="color: blue;">B：<<= $RankCount["B"]>></span> | 
+        <span style="color: purple;">C：<<= $RankCount["C"]>></span> | 
+        <span style="color: gray;">D：<<= $RankCount["D"]>></span>
+    </div>\
+<</widget>>
+
+/* 获取特质按钮 */
+<<widget "traitButton">><<nobr>>
+    <<set _key = _args[0]>>
+    <<set _trait = setup.traits[_key]>>
+    /* 预定义 ID，避免在属性内写复杂逻辑 */
+    <<set _containerId = "btn-" + _key>>
+
+    <<capture _key>>
+    <span @id="_containerId">
+        <<if $GainedTraits.includes(_key)>>
+            <span style="color: green;">✓ <<= setup.traits[_key].name>></span>
+            <<link "[取消]">>
+                <<set $GainedTraits.delete(_key)>>
+                /* 刷新自身 */
+                <<replace `"#btn-" + _key`>><<traitButton _key>><</replace>>
+                /* 刷新列表 */
+                <<if document.getElementById("traitList")>>
+                    <<replace "#traitList">><<showGainedTraits>><</replace>>
+                <</if>>
+            <</link>>
+        <<else>>
+            <span style="color: gray;"><<= setup.traits[_key].name>></span>
+            <<link "[获取]">>
+                <<run $GainedTraits.push(_key)>>
+                <<replace `"#btn-" + _key`>><<traitButton _key>><</replace>>
+                <<if document.getElementById("traitList")>>
+                    <<replace "#traitList">><<showGainedTraits>><</replace>>
+                <</if>>
+            <</link>>
+        <</if>>
+    </span>
+    <</capture>>
+<</nobr>><</widget>>
+
+
+/* 显示获取的特质 */
+<<widget "showGainedTraits">>
+    <<if $GainedTraits.length > 0>>
+        <<for _i, _key range $GainedTraits>>
+            <<= setup.traits[_key].name>>
+            /* 修正：SugarCube 的 for 循环判断最后一位通常用 _i !== $GainedTraits.length - 1 */
+            <<if _i !== $GainedTraits.length - 1>>、<</if>>
+        <</for>>
+    <<else>>
+        无
+    <</if>>
+<</widget>>
+
+/*更新玩家评级*/
+<<widget "updatePlayerLevel">>\
+    /* 先更新各项数值的分布统计 */
+    <<countRanks>>\
+    /* 直接调用 JS 函数得到结果并存入变量 */
+    <<set $PlayerRecordedLevel = setup.calculateFinalRank($RankCount)>>\
+<</widget>>

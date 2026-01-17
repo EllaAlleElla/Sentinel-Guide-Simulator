@@ -1,0 +1,236 @@
+:: Start [noreturn]
+[[开始游戏|Tower-Register-Start]]
+
+[[游戏设置|game-settings]]
+
+[[查看说明|Start-ReadMe]]
+
+[[更新变量|Start-UpdateVariables]]
+
+:: Start-ReadMe [noreturn]
+这个游戏还只是一个半成品，基础功能并不完善。
+
+作者只是代码小白，很多代码不是自己敲的。
+
+会尽量持续更新。效率比较低。
+
+最新版可以在github找到: https://github.com/EllaAlleElla/Sentinel-Guide-Simulator
+
+如果你出于某种原因很想联系我，可以来加QQ1393480758.不建议找其他方式联系，因为我不一定看得见。
+
+:: Start-UpdateVariables [noreturn]
+这个页面会自动检查所有未定义的变量并初始化。
+
+因为在游戏更新版本后，新加入的变量在新存档内不会被自动初始化，为了避免bug，我专门写了这个页面。出现各种问题的时候可以来这边试一试。
+
+<<nobr>>
+/*游戏系统*/
+/*时间*/
+<<if not def $minute>><<set $minute = 0>><</if>>
+<<if not def $hour>><<set $hour = 8>><</if>>
+<<if not def $day>><<set $day = 1>><</if>>
+<<if not def $weekDay>><<set $weekDay = 1>><</if>>
+<<if not def $month>><<set $month = 1>><</if>>
+<<if not def $year>><<set $year = 1>><</if>>
+<<if not def $formattedMinute>><<set $formattedMinute = 0>><</if>>
+<<if not def $showHour>><<set $showHour = 8>><</if>>
+
+/*游戏设置*/
+
+/*是否允许特殊npc*/
+<<if not def $AllowSpeacialNPCs>><<set $AllowSpeacialNPCs = true>><</if>>
+<<if not def $AllowMiles>><<set $AllowMiles = true>><</if>>
+<<if not def $AllowTerald>><<set $AllowTerald = true>><</if>>
+<<if not def $AllowRed>><<set $AllowRed = true>><</if>>
+
+
+/*玩家数据*/
+
+/*名字*/
+<<if not def $PlayerName>><<set $PlayerName = "">><</if>>
+/*姓氏*/
+<<if not def $PlayerLastName>><<set $PlayerLastName = "">><</if>>
+/*性别-true为男false为女*/
+<<if not def $PlayerGenderBoy>><<set $PlayerGenderBoy = true>><</if>>
+/*是否是哨兵*/
+<<if not def $PlayerSentinel>><<set $PlayerSentinel = false>><</if>>
+/*是否是向导*/
+<<if not def $PlayerGuide>><<set $PlayerGuide = false>><</if>>
+/*体型*/
+<<if not def $PlayerSize>><<set $PlayerSize=0>><</if>>
+/*发色*/
+<<if not def $PlayerHairColor>><<set $PlayerHairColor = "">><</if>>
+/*瞳色*/
+<<if not def $PlayerEyeColor>><<set $PlayerEyeColor = "">><</if>>
+/*肤色*/
+<<if not def $PlayerSkinColor>><<set $PlayerSkinColor = "">><</if>>
+/*塔的评级*/
+<<if not def $PlayerRecordedLevel>><<set $PlayerRecordedLevel=0>><</if>>
+/*实际应评级*/
+<<if not def $PlayerActualLevel>><<set $PlayerActualLevel=0>><</if>>
+/*职位为学员/外勤/后勤/教官*/
+<<if not def $PlayerClass>><<set $PlayerClass=0>><</if>>
+/*已获取的特质列表*/
+<<if not def $GainedTraits>><<set $GainedTraits = []>><</if>>
+
+
+
+/*数值*/
+
+/*基础能力数值*/
+/*外貌*/
+<<if not def $Appearance>><<set $Appearance=0>><</if>>
+/*共情力*/
+<<if not def $Empathy>><<set $Empathy=0>><</if>>
+/*魅力*/
+<<if not def $Charisma>><<set $Charisma=0>><</if>>
+/*意志力*/
+<<if not def $Willpower>><<set $Willpower=0>><</if>>
+/*精神强度*/
+<<if not def $Resilience>><<set $Resilience=0>><</if>>
+/*智力*/
+<<if not def $Intelligence>><<set $Intelligence=0>><</if>>
+/*感知*/
+<<if not def $Perception>><<set $Perception=0>><</if>>
+/*学习力*/
+<<if not def $Aptitude>><<set $Aptitude=0>><</if>>
+/*体能*/
+<<if not def $Endurance>><<set $Endurance=0>><</if>>
+/*速度*/
+<<if not def $Speed>><<set $Speed=0>><</if>>
+/*力量*/
+<<if not def $Strength>><<set $Strength=0>><</if>>
+/*哨向特有数值*/
+/*精神力上限*/
+<<if not def $SpiritualPowerLimit>><<set $SpiritualPowerLimit=0>><</if>>
+/*现存精神力*/
+<<if not def $SpiritualPowerRemain>><<set $SpiritualPowerRemain=0>><</if>>
+
+/*技能水平*/
+/*精神链接*/
+<<if not def $PsychicBondSkillLevel>><<set $PsychicBondSkillLevel=0>><</if>>
+/*枪械*/
+<<if not def $GunSkillLevel>><<set $GunSkillLevel=0>><</if>>
+/*格斗*/
+<<if not def $FightSkillLevel>><<set $FightSkillLevel=0>><</if>>
+/*策略*/
+<<if not def $StrategySkillLevel>><<set $StrategySkillLevel=0>><</if>>
+/*侦查*/
+<<if not def $ScoutingSkillLevel>><<set $ScoutingSkillLevel=0>><</if>>
+/*医疗急救*/
+<<if not def $RescueSkillLevel>><<set $RescueSkillLevel=0>><</if>>
+/*社交*/
+<<if not def $CommunicateSkillLevel>><<set $CommunicateSkillLevel=0>><</if>>
+/*情绪控制*/
+<<if not def $CalmSkillLevel>><<set $CalmSkillLevel=0>><</if>>
+
+/*个人状态*/
+/*压力*/
+<<if not def $Stress>><<set $Stress=0>><</if>>
+/*镇定*/
+<<if not def $Calm>><<set $Calm=10000>><</if>>
+/*疼痛*/
+<<if not def $Hurt>><<set $Hurt=0>><</if>>
+/*健康*/
+<<if not def $Health>><<set $Health=4000>><</if>>
+/*疲劳*/
+<<if not def $Tired>><<set $Tired=0>><</if>>
+/*创伤*/
+<<if not def $Trauma>><<set $Trauma=0>><</if>>
+
+
+/*精神体*/
+/*精神体名字*/
+<<if not def $SpiritAnimalName>><<set $SpiritAnimalName = "">><</if>>
+/*精神体量词*/
+<<if not def $SpiritAnimalWord>><<set $SpiritAnimalWord = "只">><</if>>
+/*精神体种族*/
+<<if not def $SpiritAnimalClass>><<set $SpiritAnimalClass = "">><</if>>
+/*是否靠足行走/有翼可飞行/游泳/蜿蜒爬行/有触手/其他*/
+<<if not def $SpiritAnimalMoving>><<set $SpiritAnimalMoving=0>><</if>>
+/*是否能漂浮*/
+<<if not def $SpiritAnimalFloating>><<set $SpiritAnimalFloating = false>><</if>>
+/*是否有毒/可放电/可致幻/可麻痹*/
+<<if not def $SpiritAnimalAbility>><<set $SpiritAnimalAbility=0>><</if>>
+/*是否是传说中的生物*/
+<<if not def $SpiritAnimalLegend>><<set $SpiritAnimalLegend = false>><</if>>
+/*是否有正面战斗能力*/
+<<if not def $SpiritAnimalAttack>><<set $SpiritAnimalAttack = true>><</if>>
+/*是否可隐秘作战*/
+<<if not def $SpiritAnimalAssassin>><<set $SpiritAnimalAssassin = false>><</if>>
+/*是否有侦查能力*/
+<<if not def $SpiritAnimalScout>><<set $SpiritAnimalScout = false>><</if>>
+/*是否有治愈能力*/
+<<if not def $SpiritAnimalHeal>><<set $SpiritAnimalHeal=0>><</if>>
+
+
+/*社交与声望*/
+
+/*玩家友好度*/
+<<if not def $PlayerFriendliness>><<set $PlayerFriendliness=0>><</if>>
+/*玩家善良度*/
+<<if not def $PlayerKindness>><<set $PlayerKindness=0>><</if>>
+/*玩家是否始终保持同一态度*/
+<<if not def $PlayerKeepSameAttitude>><<set $PlayerKeepSameAttitude = true>><</if>>
+/*玩家默认态度-普通/温和/热情/暴躁/冷淡*/
+<<if not def $PlayerDefaultAttitude>><<set $PlayerDefaultAttitude=0>><</if>>
+
+/*玩家声望*/
+<<if not def $PlayerReputation>><<set $PlayerReputation=0>><</if>>
+
+/*玩家与精神体好感度*/
+<<if not def $FriendshipSpiritAnimal>><<set $FriendshipSpiritAnimal=20>><</if>>
+
+/*特殊npc*/
+/*Miles*/
+<<if not def $FriendshipMiles>><<set $FriendshipMiles=0>><</if>>/*好感度*/
+<<if not def $RespectMiles>><<set $RespectMiles=0>><</if>>/*尊敬*/
+<<if not def $HealthLimitMiles>><<set $HealthLimitMiles=3200>><</if>>/*生命值上限*/
+<<if not def $HealthMiles>><<set $HealthMiles=3200>><</if>>/*生命值*/
+<<if not def $FightSkillMiles>><<set $FightSkillMiles=40>><</if>>/*战斗力*/
+<<if not def $LevelMiles>><<set $LevelMiles = "A">><</if>>/*目前评级*/
+<<if not def $ClassMiles>><<set $ClassMiles = "学员">><</if>>/*目前职位*/
+<<if not def $PlayerHaveMetMiles>><<set $PlayerHaveMetMiles = false>><</if>>/*玩家是否遇见过Miles*/
+<<if not def $PlayerIsTeacherOfMiles>><<set $PlayerIsTeacherOfMiles = false>><</if>>/*玩家是否是Miles的老师*/
+
+/*Terald*/
+<<if not def $FriendshipTerald>><<set $FriendshipTerald=0>><</if>>/*好感度*/
+<<if not def $TraumaTerald>><<set $TraumaTerald=0>><</if>>/*创伤*/
+<<if not def $HealthLimitTerald>><<set $HealthLimitTerald=2800>><</if>>/*生命值上限*/
+<<if not def $HealthTerald>><<set $HealthTerald=2800>><</if>>/*生命值*/
+<<if not def $SpiritualPowerLimitTerald>><<set $SpiritualPowerLimitTerald=6000>><</if>>/*精神力上限*/
+<<if not def $SpiritualPowerRemainTerald>><<set $SpiritualPowerRemainTerald=6000>><</if>>/*现存精神力*/
+<<if not def $SuspenseByTowerTerald>><<set $SuspenseByTowerTerald=0>><</if>>/*塔的怀疑*/
+<<if not def $LevelTerald>><<set $LevelTerald = "B">><</if>>/*目前评级*/
+<<if not def $PlayerHaveMetTerald>><<set $PlayerHaveMetTerald = false>><</if>>/*玩家是否遇见过Terald*/
+<<if not def $PlayerIsStudentOfTerald>><<set $PlayerIsStudentOfTerald = false>><</if>>/*玩家是否是Terald的学生*/
+<<if not def $TowerNoticed>><<set $TowerNoticed = false>><</if>>/*塔是否已确定怀疑*/
+
+/*秦昭*/
+<<if not def $FriendshipRed>><<set $FriendshipRed=0>><</if>>/*好感度*/
+<<if not def $HealthLimitRed>><<set $HealthLimitRed=3200>><</if>>/*生命值上限*/
+<<if not def $HealthRed>><<set $HealthRed=3200>><</if>>/*生命值*/
+<<if not def $LevelRed>><<set $LevelRed = "A">><</if>>/*目前评级*/
+
+
+/*训练场*/
+/*是否进入过训练场*/
+<<if not def $PlayerHaveEnteredTrainingCamp>><<set $PlayerHaveEnteredTrainingCamp = false>><</if>>
+/*是否已取得专门招收哨兵学员资格*/
+<<if not def $PlayerIsExperiencedSentinelTeacher>><<set $PlayerIsExperiencedSentinelTeacher = false>><</if>>
+/*是否已取得专门招收向导学员资格*/
+<<if not def $PlayerIsExperiencedGuideTeacher>><<set $PlayerIsExperiencedGuideTeacher = false>><</if>>
+/*临时代哨兵课次数*/
+<<if not def $PlayerWorkAsSupplySentinelTeacher>><<set $PlayerWorkAsSupplySentinelTeacher=0>><</if>>
+/*临时代向导课次数*/
+<<if not def $PlayerWorkAsSupplyGuideTeacher>><<set $PlayerWorkAsSupplyGuideTeacher=0>><</if>>
+
+
+
+
+在你看到这行字的时候，你的缺失数据已经完成初始化了。
+<</nobr>>
+
+<<link "返回开始页面">>
+    <<goto "Start">>
+<</link>>

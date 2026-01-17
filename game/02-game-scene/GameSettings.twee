@@ -1,0 +1,459 @@
+:: game-settings [noreturn]
+你可以在这里更改游戏设置。
+
+启用特殊npc：游戏内存在一些特殊npc，他们每个都有各自独立的剧情和设置。对玩家来说可选的特质列表对特殊npc也生效。如果担心撞设定，可以选择关掉这个选项，但游戏内容会大大减少。
+
+<<nobr>>
+    <<include "SpecialNPCToggle">>
+<</nobr>>
+
+如果你希望重置游戏，或是旧版本的初始化变量存在问题，你可以靠下面的按钮一键重设所有变量。
+
+注意：这会导致你所有的数值回归初始值，清空你的任何数值提升、自定义名称等。
+
+[[重设所有变量|game-settings-reset all variables]]
+
+
+这个页面也可以让你启用作弊，随意更改你的各种数据。如果需要更改名字，也可以进入这个页面。（注意，需要先创建存档）
+
+[[作弊|cheat]]
+
+
+[[退出游戏设置|Player Dormitory]]
+
+:: cheat [noreturn]
+你可以在这里修改游戏里的各种数据。
+
+你也可以强行修改出一些正常游戏里无法达成的情况，例如既是哨兵又是向导，又或者在拥有特质的情况下依然被塔评级为S以外的等级。
+
+就目前的代码来看，胡乱修改应该不会导致游戏崩溃。然而你依然不会看到特殊差分，而是会进入一个平凡的场景。
+
+
+玩家数据：
+
+
+你的名字是<<textbox "$PlayerName" $PlayerName>>，姓氏是<<textbox "$PlayerLastName" $PlayerLastName>>。
+
+你<<listbox "$PlayerSentinel" autoselect>>
+	<<option "不是哨兵" false>>
+	<<option "是哨兵" true>><</listbox>>，但你<<listbox "$PlayerGuide" autoselect>>
+		<<option "不是向导" false>>
+		<<option "是向导" true>><</listbox>>。
+
+你是<<listbox "$PlayerGenderBoy" autoselect>>
+	<<option "男性" true>>
+	<<option "女性" false>><</listbox>>，你的职位是<<listbox "$PlayerClass" autoselect>>
+    	<<option "学员" 0>>
+    	<<option "外勤" 1>>
+    	<<option "后勤" 2>>
+    	<<option "教官" 3>><</listbox>>，塔对你的评级是<<listbox "$PlayerRecordedLevel" autoselect>>
+        <<option "D" D>>
+        <<option "C" C>>
+        <<option "B" B>>
+        <<option "A" A>>
+        <<option "S" S>><</listbox>>。
+
+
+基础能力：
+
+外貌：<<button "加至最多">><<set $Appearance = 10000>><</button>><<button "增加一些">><<set $Appearance += 2000>><</button>><<button "减少一些">><<set $Appearance -= 2000>><</button>><<button "减至最少">><<set $Appearance = 0>><</button>>
+共情力：<<button "加至最多">><<set $Empathy = 10000>><</button>><<button "增加一些">><<set $Empathy += 2000>><</button>><<button "减少一些">><<set $Empathy -= 2000>><</button>><<button "减至最少">><<set $Empathy = 0>><</button>>
+魅力：<<button "加至最多">><<set $Charisma = 10000>><</button>><<button "增加一些">><<set $Charisma += 2000>><</button>><<button "减少一些">><<set $Charisma -= 2000>><</button>><<button "减至最少">><<set $Charisma = 0>><</button>>
+意志：<<button "加至最多">><<set $Willpower = 10000>><</button>><<button "增加一些">><<set $Willpower += 2000>><</button>><<button "减少一些">><<set $Willpower -= 2000>><</button>><<button "减至最少">><<set $Willpower = 0>><</button>>
+精神强度：<<button "加至最多">><<set $Resilience = 10000>><</button>><<button "增加一些">><<set $Resilience += 2000>><</button>><<button "减少一些">><<set $Resilience -= 2000>><</button>><<button "减至最少">><<set $Resilience = 0>><</button>>
+智力：<<button "加至最多">><<set $Intelligence = 10000>><</button>><<button "增加一些">><<set $Intelligence += 2000>><</button>><<button "减少一些">><<set $Intelligence -= 2000>><</button>><<button "减至最少">><<set $Intelligence = 0>><</button>>
+感知：<<button "加至最多">><<set $Perception = 10000>><</button>><<button "增加一些">><<set $Perception += 2000>><</button>><<button "减少一些">><<set $Perception -= 2000>><</button>><<button "减至最少">><<set $Perception = 0>><</button>>
+学习力：<<button "加至最多">><<set $Aptitude = 10000>><</button>><<button "增加一些">><<set $Aptitude += 2000>><</button>><<button "减少一些">><<set $Aptitude -= 2000>><</button>><<button "减至最少">><<set $Aptitude = 0>><</button>>
+体能：<<button "加至最多">><<set $Endurance = 10000>><</button>><<button "增加一些">><<set $Endurance += 2000>><</button>><<button "减少一些">><<set $Endurance -= 2000>><</button>><<button "减至最少">><<set $Endurance = 0>><</button>>
+速度：<<button "加至最多">><<set $Speed = 10000>><</button>><<button "增加一些">><<set $Speed += 2000>><</button>><<button "减少一些">><<set $Speed -= 2000>><</button>><<button "减至最少">><<set $Speed = 0>><</button>>
+力量：<<button "加至最多">><<set $Strength = 10000>><</button>><<button "增加一些">><<set $Strength += 2000>><</button>><<button "减少一些">><<set $Strength -= 2000>><</button>><<button "减至最少">><<set $Strength = 0>><</button>>
+精神力：<<button "加至最多">><<set $SpiritualPowerLimit = 10000>><</button>><<button "增加一些">><<set $SpiritualPowerLimit += 2000>><</button>><<button "减少一些">><<set $SpiritualPowerLimit -= 2000>><</button>><<button "减至最少">><<set $SpiritualPowerLimit = 0>><</button>>
+
+
+技能水平：
+
+精神链接熟练度：<<button "加至最多">><<set $PsychicBondSkillLevel = 100>><</button>><<button "增加一些">><<set $PsychicBondSkillLevel += 20>><</button>><<button "减少一些">><<set $PsychicBondSkillLevel -= 20>><</button>><<button "减至最少">><<set $PsychicBondSkillLevel = 0>><</button>>
+枪械技巧：<<button "加至最多">><<set $GunSkillLevel = 100>><</button>><<button "增加一些">><<set $GunSkillLevel += 20>><</button>><<button "减少一些">><<set $GunSkillLevel -= 20>><</button>><<button "减至最少">><<set $GunSkillLevel = 0>><</button>>
+格斗技巧：<<button "加至最多">><<set $FightSkillLevel = 100>><</button>><<button "增加一些">><<set $FightSkillLevel += 20>><</button>><<button "减少一些">><<set $FightSkillLevel -= 20>><</button>><<button "减至最少">><<set $FightSkillLevel = 0>><</button>>
+侦查技巧：<<button "加至最多">><<set $ScoutingSkillLevel = 100>><</button>><<button "增加一些">><<set $ScoutingSkillLevel += 20>><</button>><<button "减少一些">><<set $ScoutingSkillLevel -= 20>><</button>><<button "减至最少">><<set $ScoutingSkillLevel = 0>><</button>>
+策略规划：<<button "加至最多">><<set $StrategySkillLevel = 100>><</button>><<button "增加一些">><<set $StrategySkillLevel += 20>><</button>><<button "减少一些">><<set $StrategySkillLevel -= 20>><</button>><<button "减至最少">><<set $StrategySkillLevel = 0>><</button>>
+医疗急救：<<button "加至最多">><<set $RescueSkillLevel = 100>><</button>><<button "增加一些">><<set $RescueSkillLevel += 20>><</button>><<button "减少一些">><<set $RescueSkillLevel -= 20>><</button>><<button "减至最少">><<set $RescueSkillLevel = 0>><</button>>
+语言沟通：<<button "加至最多">><<set $CommunicateSkillLevel = 100>><</button>><<button "增加一些">><<set $CommunicateSkillLevel += 20>><</button>><<button "减少一些">><<set $CommunicateSkillLevel -= 20>><</button>><<button "减至最少">><<set $CommunicateSkillLevel = 0>><</button>>
+情绪控制：<<button "加至最多">><<set $CalmSkillLevel = 100>><</button>><<button "增加一些">><<set $CalmSkillLevel += 20>><</button>><<button "减少一些">><<set $CalmSkillLevel -= 20>><</button>><<button "减至最少">><<set $CalmSkillLevel = 0>><</button>>
+    
+
+特殊能力：
+
+接触净化：你可以靠物理接触在无精神链接的情况下平复图景风暴、抚平精神、净化创伤。建立精神链接的情况下，你安抚精神的能力大大加强。作为代价，每当你有意或无意地使用这个能力，你都会为你自己累积创伤，修复对方精神的难度越大、你精神链接和修复的熟练度越低，你的创伤累积速度越快。
+<<traitButton "ContactPurification">>
+
+精神图景显化：你可以将精神图景中的物质显化到现实，无需消耗精神力。当你熟练度低时，操控显化出的物质将非常困难，当熟练度足够时，你可以得心应手地操控你显化出的物质，操控的物质体积越大、结构越复杂，操作难度就越大。然而，无论你的熟练度高低，这个能力都会将你的精神力储量上限固定在原本最高的70%。
+<<traitButton "Manifestation">>
+
+精神冲击：你的精神力尖锐且锋利，让你有机会消耗精神力在无物理接触的情况下攻击他人的精神。在熟练度达到高度（约70%）后，你可以消耗精神力以刺激对方精神的形式从他人脑中取得情报，一定程度上达成读心术的效果，然而对方会察觉有人在攻击。
+<<traitButton "PsiStrike">>
+
+幻术：你可以消耗精神力将某人拉入你构建的幻境，成功率取决于对方的精神力水平、目前状态和精神图景稳定性。拙劣的设计依旧会被识破，且无论你构建幻境成功与否，你都会消耗大量精神力。付出精神力越多，幻术效果越明显，但如果你消耗的精神力达到一定量，你会在使用幻术后立刻晕倒。
+<<traitButton "Illusion">>
+
+读心术：你可以在不受察觉的情况下探测他人的想法，没有消耗或限制，不会造成伤害。在熟练度低时成功率相当低，你可以尝试消耗精神力再尝试一次。拥有其他精神系特殊能力时，你的读心术成功率会得到提高，并且每隔两小时就可以无消耗使用一次强力读心术，必定成功。面对与你同样拥有特殊能力或精神力水平足够高的人，你依然有失败风险，且有可能被察觉。
+<<traitButton "Telepathy">>
+
+黑暗哨兵：作为一个哨兵，你意志坚韧，不需要向导提供的精神调解，能适应一个人执行各种任务。作为代价，除非向导同样为极高评级，否则没有向导能承受与你建立的精神链接。
+<<traitButton "DarkSentinel">>
+
+
+
+精神体数据：
+
+你的精神体名叫<<textbox "$SpiritAnimalName" $SpiritAnimalName>>，它是一<<textbox "$SpiritAnimalWord" $SpiritAnimalWord>><<textbox "$SpiritAnimalClass" $SpiritAnimalClass>>。
+
+它<<listbox "$SpiritAnimalMoving" autoselect>>
+	<<option "靠足行走" 0>>
+	<<option "靠翼飞行" 1>>
+	<<option "靠游泳行动" 2>>
+	<<option "蜿蜒爬行" 3>>
+	<<option "靠触手攀爬" 4>>
+	<<option "靠特殊的方式移动" 5>><</listbox>>，并且<<listbox "$SpiritAnimalFloating" autoselect>>
+    	<<option "不能漂浮在空中" false>>
+   		<<option "可以漂浮在空中" true>><</listbox>>。
+
+它<<listbox "$SpiritAnimalAbility" autoselect>>
+	<<option "可以靠毒素致伤" 0>>
+	<<option "可以靠电流致伤" 1>>
+	<<option "可以致幻敌人" 2>>
+	<<option "可以麻痹敌人" 3>>
+    <<option "没有特别的能力" 4>><</listbox>>，<<listbox "$SpiritAnimalLegend" autoselect>>
+  		<<option "尽管它不是传说中的生物，它也很厉害" false>>
+    	<<option "并且还是传说现世" true>><</listbox>>。
+
+它<<listbox "$SpiritAnimalAttack" autoselect>>
+	<<option "有" true>>
+	<<option "没有" false>><</listbox>>正面作战的能力，<<listbox "$SpiritAnimalAssassin" autoselect>>
+		<<option "能够" true>>
+		<<option "不能" false>><</listbox>>潜入作战，<<listbox "$SpiritAnimalScout" autoselect>>
+			<<option "可以" true>>
+			<<option "不能" false>><</listbox>>执行侦查任务，<<listbox "$SpiritAnimalHeal" autoselect>>
+				<<option "没有治愈能力" 0>>
+                <<option "可以治愈身体创伤" 1>>
+                <<option "可以治愈精神创伤" 2>>
+				<<option "身体和精神的创伤都可以治愈" 3>><</listbox>>。
+
+
+社交和声望：
+
+基本上，你对待别人的态度是<<listbox "$PlayerDefaultAttitude" autoselect>>
+	<<option "普通" 0>>
+	<<option "温和" 1>>
+	<<option "热情" 2>>
+	<<option "暴躁" 3>>
+	<<option "冷淡" 4>><</listbox>>的。
+
+你对他人的友好程度：<<button "加至最多">><<set $PlayerFriendliness += 200>><</button>><<button "增加一些">><<set $PlayerFriendliness += 20>><</button>><<button "减少一些">><<set $PlayerFriendliness -= 20>><</button>><<button "减至最少">><<set $PlayerFriendliness += 200>><</button>>
+你乐于帮助他人的程度：<<button "加至最多">><<set $PlayerKindness += 200>><</button>><<button "增加一些">><<set $PlayerKindness += 20>><</button>><<button "减少一些">><<set $PlayerKindness -= 20>><</button>><<button "减至最少">><<set $PlayerKindness += 200>><</button>>
+
+你和精神体的好感度：<<button "加至最多">><<set $FriendshipSpiritAnimal = 100>><</button>><<button "增加一些">><<set $FriendshipSpiritAnimal += 20>><</button>><<button "减少一些">><<set $FriendshipSpiritAnimal -= 20>><</button>><<button "减至最少">><<set $FriendshipSpiritAnimal = 0>><</button>>
+
+
+特殊npc：
+
+Miles：
+好感度：<<button "加至最多">><<set $FriendshipMiles = 100>><</button>><<button "增加一些">><<set $FriendshipMiles += 20>><</button>><<button "减少一些">><<set $FriendshipMiles -= 20>><</button>><<button "减至最少">><<set $FriendshipMiles = 0>><</button>>
+
+Terald：
+
+秦昭：
+
+[[确认|Player Dormitory]]
+
+
+:: game-settings-reset all variables [noreturn]
+你确定要把所有数据初始化吗？
+
+
+[[确定|game-settings-reset all variables-confirm]]
+[[取消|game-settings]]
+
+:: game-settings-reset all variables-confirm [noreturn]
+<<nobr>>
+/*游戏系统*/
+/*时间*/
+<<set $minute = 0>>
+<<set $hour = 8>>
+<<set $day = 1>>
+<<set $weekDay = 1>>
+<<set $month = 1>>
+<<set $year = 1>>
+<<set $formattedMinute = 0>>
+<<set $showHour = 8>>
+
+
+/*游戏设置*/
+
+/*是否允许特殊npc*/
+<<set $AllowSpeacialNPCs = true>>
+<<set $AllowMiles = true>>
+<<set $AllowTerald = true>>
+<<set $AllowRed = true>>
+
+
+/*玩家信息*/
+
+/*名字*/
+<<set $PlayerName = "">>
+/*姓氏*/
+<<set $PlayerLastName = "">>
+/*性别-true为男false为女*/
+<<set $PlayerGenderBoy = true>>
+/*是否是哨兵*/
+<<set $PlayerSentinel = false>>
+/*是否是向导*/
+<<set $PlayerGuide = false>>
+/*体型*/
+<<set $PlayerSize=0>>
+/*发色*/
+<<set $PlayerHairColor = "">>
+/*瞳色*/
+<<set $PlayerEyeColor = "">>
+/*肤色*/
+<<set $PlayerSkinColor = "">>
+/*塔的评级*/
+<<set $PlayerRecordedLevel=0>>
+/*实际应评级*/
+<<set $PlayerActualLevel=0>>
+/*职位为学员/外勤/后勤/教官*/
+<<set $PlayerClass=0>>
+/*已获取的特质列表*/
+<<set $GainedTraits = []>>
+
+
+
+/*数值*/
+
+/*基础能力数值*/
+/*外貌*/
+<<set $Appearance=0>>
+/*共情力*/
+<<set $Empathy=0>>
+/*魅力*/
+<<set $Charisma=0>>
+/*意志力*/
+<<set $Willpower=0>>
+/*精神强度*/
+<<set $Resilience=0>>
+/*智力*/
+<<set $Intelligence=0>>
+/*感知*/
+<<set $Perception=0>>
+/*学习力*/
+<<set $Aptitude=0>>
+/*体能*/
+<<set $Endurance=0>>
+/*速度*/
+<<set $Speed=0>>
+/*力量*/
+<<set $Strength=0>>
+/*哨向特有数值*/
+/*精神力上限*/
+<<set $SpiritualPowerLimit=0>>
+/*现存精神力*/
+<<set $SpiritualPowerRemain=0>>
+
+/*技能水平*/
+/*精神链接*/
+<<set $PsychicBondSkillLevel=0>>
+/*枪械*/
+<<set $GunSkillLevel=0>>
+/*格斗*/
+<<set $FightSkillLevel=0>>
+/*策略*/
+<<set $StrategySkillLevel=0>>
+/*侦查*/
+<<set $ScoutingSkillLevel=0>>
+/*医疗急救*/
+<<set $RescueSkillLevel=0>>
+/*社交*/
+<<set $CommunicateSkillLevel=0>>
+/*情绪控制*/
+<<set $CalmSkillLevel=0>>
+
+/*个人状态*/
+/*压力*/
+<<set $Stress=0>>
+/*镇定*/
+<<set $Calm=10000>>
+/*疼痛*/
+<<set $Hurt=0>>
+/*健康*/
+<<set $Health=4000>>
+/*疲劳*/
+<<set $Tired=0>>
+/*创伤*/
+<<set $Trauma=0>>
+
+
+/*精神体*/
+/*精神体名字*/
+<<set $SpiritAnimalName = "">>
+/*精神体量词-其实我也不知道为什么我一定要自定义它*/
+<<set $SpiritAnimalWord = "只">>
+/*精神体种族*/
+<<set $SpiritAnimalClass = "">>
+/*是否靠足行走/有翼可飞行/游泳/蜿蜒爬行/有触手/其他*/
+<<set $SpiritAnimalMoving=0>>
+/*是否能漂浮*/
+<<set $SpiritAnimalFloating = false>>
+/*是否有毒/可放电/可致幻/可麻痹*/
+<<set $SpiritAnimalAbility=0>>
+/*是否是传说中的生物*/
+<<set $SpiritAnimalLegend = false>>
+/*是否有正面战斗能力*/
+<<set $SpiritAnimalAttack = true>>
+/*是否可隐秘作战*/
+<<set $SpiritAnimalAssassin = false>>
+/*是否有侦查能力*/
+<<set $SpiritAnimalScout = false>>
+/*是否有治愈能力*/
+<<set $SpiritAnimalHeal=0>>
+
+
+/*社交与声望*/
+
+/*玩家友好度*/
+<<set $PlayerFriendliness=0>>
+/*玩家善良度*/
+<<set $PlayerKindness=0>>
+/*玩家是否始终保持同一态度*/
+<<set $PlayerKeepSameAttitude = true>>
+/*玩家默认态度-普通/温和/热情/暴躁/冷淡*/
+<<set $PlayerDefaultAttitude=0>>
+
+/*玩家声望*/
+<<set $PlayerReputation=0>>
+
+/*玩家与精神体好感度*/
+<<set $FriendshipSpiritAnimal=20>>
+
+/*特殊npc*/
+/*Miles*/
+<<set $FriendshipMiles=0>>/*好感度*/
+<<set $RespectMiles=0>>/*尊敬*/
+<<set $HealthLimitMiles=3200>>/*生命值上限*/
+<<set $HealthMiles=3200>>/*生命值*/
+<<set $FightSkillMiles=40>>/*战斗力*/
+<<set $LevelMiles = "A">>/*目前评级*/
+<<set $ClassMiles = "学员">>/*目前职位*/
+<<set $PlayerHaveMetMiles = false>>/*玩家是否遇见过Miles*/
+<<set $PlayerIsTeacherOfMiles = false>>/*玩家是否是Miles的老师*/
+/*Terald*/
+<<set $FriendshipTerald=0>>/*好感度*/
+<<set $TraumaTerald=0>>/*创伤*/
+<<set $HealthLimitTerald=2800>>/*生命值上限*/
+<<set $HealthTerald=2800>>/*生命值*/
+<<set $SpiritualPowerLimitTerald=6000>>/*精神力上限*/
+<<set $SpiritualPowerRemainTerald=6000>>/*现存精神力*/
+<<set $SuspenseByTowerTerald=0>>/*塔的怀疑*/
+<<set $LevelTerald = "B">>/*目前评级*/
+<<set $PlayerHaveMetTerald = false>>/*玩家是否遇见过Terald*/
+<<set $PlayerIsStudentOfTerald = false>>/*玩家是否是Terald的学生*/
+<<set $TowerNoticed = false>>/*塔是否已确定怀疑*/
+/*秦昭*/
+<<set $FriendshipRed=0>>/*好感度*/
+<<set $HealthLimitRed=3200>>/*生命值上限*/
+<<set $HealthRed=3200>>/*生命值*/
+<<set $LevelRed = "A">>/*目前评级*/
+
+/*训练场*/
+/*是否进入过训练场*/
+<<set $PlayerHaveEnteredTrainingCamp = false>>
+/*是否已取得专门招收哨兵学员资格*/
+<<set $PlayerIsExperiencedSentinelTeacher = false>>
+/*是否已取得专门招收向导学员资格*/
+<<set $PlayerIsExperiencedGuideTeacher = false>>
+/*临时代哨兵课次数*/
+<<set $PlayerWorkAsSupplySentinelTeacher=0>>
+/*临时代向导课次数*/
+<<set $PlayerWorkAsSupplyGuideTeacher=0>>
+<</nobr>>
+在你看到这行字的时候，你已经重设了所有变量。
+
+[[返回游戏设置|game-settings]]
+
+:: MilesButton
+<<nobr>>
+<span id="miles-toggle">
+    <<if $AllowMiles>>
+        <<button "禁用 Miles">>
+            <<set $AllowMiles = false>>
+            <<replace "#miles-toggle">><<include "MilesButton">><</replace>>
+        <</button>>
+    <<else>>
+        <<button "启用 Miles">>
+            <<set $AllowMiles = true>>
+            <<replace "#miles-toggle">><<include "MilesButton">><</replace>>
+        <</button>>
+    <</if>>
+</span>
+<</nobr>>
+:: TeraldButton
+<<nobr>>
+<span id="terald-toggle">
+    <<if $AllowTerald>>
+        <<button "禁用 Terald">>
+            <<set $AllowTerald = false>>
+            <<replace "#terald-toggle">><<include "TeraldButton">><</replace>>
+        <</button>>
+    <<else>>
+        <<button "启用 Terald">>
+            <<set $AllowTerald = true>>
+            <<replace "#terald-toggle">><<include "TeraldButton">><</replace>>
+        <</button>>
+    <</if>>
+</span>
+<</nobr>>
+:: RedButton
+<<nobr>>
+<span id="red-toggle">
+    <<if $AllowRed>>
+        <<button "禁用 秦昭">>
+            <<set $AllowRed = false>>
+            <<replace "#red-toggle">><<include "RedButton">><</replace>>
+        <</button>>
+    <<else>>
+        <<button "启用 秦昭">>
+            <<set $AllowRed = true>>
+            <<replace "#red-toggle">><<include "RedButton">><</replace>>
+        <</button>>
+    <</if>>
+</span>
+<</nobr>>
+:: SpecialNPCToggle
+<<nobr>>
+<span id="special-npc-main-toggle">
+    <<if $AllowSpeacialNPCs == false>>
+        <<button "启用全部特殊NPC">>
+            <<set $AllowSpeacialNPCs = true>>
+            <<set $AllowMiles = true>>
+            <<set $AllowTerald = true>>
+            <<set $AllowRed = true>>
+            <<replace "#special-npc-main-toggle">><<include "SpecialNPCToggle">><</replace>>
+        <</button>>
+    <<else>>
+        <<button "禁用全部特殊NPC">>
+            <<set $AllowSpeacialNPCs = false>>
+            <<set $AllowMiles = false>>
+            <<set $AllowTerald = false>>
+            <<set $AllowRed = false>>
+            <<replace "#special-npc-main-toggle">><<include "SpecialNPCToggle">><</replace>>
+        <</button>>
+        <br>
+        /* 当总开关开启时，自动展开单独的调整按钮 */
+        <details class="npc-info-block" >
+			<summary>单独调整每个npc</summary>
+<<include "MilesButton">><br>
+<<include "TeraldButton">><br>
+<<include "RedButton">><br>
+        </details>
+    <</if>>
+</span>
+<</nobr>>

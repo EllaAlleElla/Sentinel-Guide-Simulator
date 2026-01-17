@@ -1,0 +1,3 @@
+:: PassageReady
+<<if not tags().includes('noreturn')>><<set $return to passage()>><</if>>
+<<timeWidget>>

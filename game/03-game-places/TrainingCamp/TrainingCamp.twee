@@ -1,0 +1,30 @@
+:: Training Camp
+你正在训练区。
+
+室外广阔的开放场地主要是哨兵在用于日常训练，这里还有一些配备最新科技的模拟训练场，据说可以投影出不同敌人和场地，以供积攒实战经验使用。
+
+旁边有一座高楼，陆续有向导进出。你知道里面有用于向导练习精神链接的房间。这座大楼同样被年轻的学员们用于学习基础的理论知识，以及任何需要学习各种技能的人参加课程，例如急救医疗或照顾精神体等。
+
+这附近还新开了一些室内的训练场，可以提供枪械、格斗、体能等训练的更优条件。
+
+<<if $PlayerClass === 0>>\
+	<<link "我来日常上课">>\
+		<<goto "Training Camp-Student-TakingClasses">>
+	<</link>>\
+<</if>>\
+
+<<link "我来提升自己">>\
+	<<goto "Training Camp-Practicing">>
+<</link>>
+
+<<link "我来协助教学">>
+	<<goto "Training Camp-Teaching">>
+<</link>>
+
+<<link "我来找人">>
+	<<goto "Training Camp-NPCs">>
+<</link>>
+
+<<link "回到宿舍">>
+	<<goto "Player Dormitory">>
+<</link>>

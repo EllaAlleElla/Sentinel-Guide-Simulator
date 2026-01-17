@@ -1,0 +1,82 @@
+:: Time [widget]
+<<widget "timeWidget">>	<<nobr>>
+<<set $weekDay = ($day % 7) + 0>>
+<<if $weekDay > 7>>
+	<<set $weekDay -= 7>>
+<<endif>>
+<<switch $weekDay>>
+	<<case 1>>周 一
+	<<case 2>>周 二
+	<<case 3>>周 三
+	<<case 4>>周 四
+	<<case 5>>周 五
+	<<case 6>>周 六
+	<<case 7>>周 日
+<<endswitch>>
+
+<<if $minute >= 60>>
+	<<set _tempmin = $minute - 60>>
+    <<set $minute = 0>>
+    <<set $minute = _tempmin>>
+    <<set $hour += 1>>
+    <<if $hour >= 24>>
+    	<<set _temphour = $hour - 24>>
+        <<set $hour = 0>>
+        <<set$hour = _temphour>>
+        <<set $day += 1>>
+    <</if>>
+<</if>>
+
+/*每日零点结算的变量在此设置归零*/
+  <<if $hour >= 24>>
+    	<<set _temphour = $hour - 24>>
+        <<set $hour = 0>>
+        <<set$hour = _temphour>>
+        <<set $day += 1>>
+    <</if>>
+
+/*每日特定时间点结算的变量在此设置归零，例子是早九点*/
+    <<if $hour === 9>>
+            		
+    <</if>>
+   
+   
+<<if $day > 30>>
+    <<if $month is 4 or $month is 6 or $month is 9 or $month is 11>>
+        <<set $day = 1>>
+        <<set $month += 1>>
+    <</if>>
+<</if>>
+<<if $day > 31>>
+    <<if $month is 1 or $month is 3 or $month is 5 or $month is 7 or $month is 8 or $month is 10>>
+        <<set $day = 1>>
+        <<set $month += 1>>
+    <</if>>
+    <<if $month is 12>>
+        <<set $day = 1>>
+        <<set $month = 1>>
+        <<set $year += 1>>
+    <</if>>
+<</if>>
+<<if $day > 28>>
+    <<if $month is 2>>
+        <<if ($year % 4 is 0 and $year % 100 is not 0) or ($year % 400 is 0)>>
+            <<if $day > 29>>
+                <<set $day = 1>>
+                <<set $month += 1>>
+            <</if>>
+        <<else>>
+            <<set $day = 1>>
+            <<set $month += 1>>
+        <</if>>
+    <</if>>
+<</if>>
+
+<<set $formattedMinute = $minute>>
+<<if $minute < 10>>
+    <<set $formattedMinute = "0" + "$minute">>
+<<endif>>
+
+<<set $showHour = $hour>>
+<</nobr>>
+<</widget>>

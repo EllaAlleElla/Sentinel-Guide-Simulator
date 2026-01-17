@@ -1,0 +1,4 @@
+:: StoryCaption [noreturn]
+第$year年 $month月 $day日 -<<timeWidget>>
+
+如果你遇到了问题，有可能是变量没有初始化。请点击下面的返回开始菜单按钮，在开始菜单更新变量。

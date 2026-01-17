@@ -1,0 +1,69 @@
+:: Training Camp-TeacherFirstEntered
+你来到训练区，还处于学员期的哨兵和向导们会在这里接受训练。训练场是开放的，因此正式成员也会经常出现在这里。
+
+你看见一群正式成员走过。
+
+<span style="opacity: 0.5">这个选项决定你是拥有独立招收学生资格的老手还是只能代教的新人。
+
+如果你决定靠这个选项直接取得独立招收学生的资格，就要确保你拥有对应的能力。
+
+招收哨兵学生需要优秀的战斗和侦查技巧、身体素质等，招收向导学生则要求你必须拥有建立和引导精神链接的能力和熟练度。
+
+顺带一提，哨兵玩家哪怕在开场设置或作弊菜单取得了精神链接熟练度，也无法在无药物或特殊条件影响下主动建立精神链接。</span>
+
+
+<<link "你认出他们曾是你的学生">>
+    <<goto "Training Camp-TeacherFirstEntered-Experienced">>
+<</link>>
+
+<<link "大部分人你都认不出">>
+    <<goto "Training Camp-TeacherFirstEntered-Starter">>
+<</link>>
+
+:: Training Camp-TeacherFirstEntered-Starter
+他们中一些人和你擦肩而过时向你简单点了点头。这就是你们之间的全部交流了。
+
+[[继续|Training Camp]]
+
+:: Training Camp-TeacherFirstEntered-Experienced
+他们也认出了你，招手打招呼：“教官！”
+
+<<if $PlayerDefaultAttitude === 0>>\
+你也回过去挥挥手。
+<<elseif $PlayerDefaultAttitude === 1>>\
+你微笑着和他们打招呼。
+<<elseif $PlayerDefaultAttitude === 2>>\
+“挺好，还没把我忘了。”你笑了。
+<<elseif $PlayerDefaultAttitude === 3>>\
+你瞪他们一眼：“怎么跟教官说话的？规矩都忘了？”
+<<else>>\
+你没什么反应，只是平淡地点了点头。
+<</if>>\
+
+<<link "他们都是哨兵">>
+<<set $PlayerIsExperiencedSentinelTeacher = true>>
+<<goto "Training Camp-TeacherFirstEntered-Experienced-End">>
+<</link>>
+
+<<link "他们都是向导">>
+<<set $PlayerIsExperiencedGuideTeacher = true>>
+<<goto "Training Camp-TeacherFirstEntered-Experienced-End">>
+<</link>>
+
+<<link "他们中有哨兵有向导">>
+<<set $PlayerIsExperiencedSentinelTeacher = true>>
+<<set $PlayerIsExperiencedGuideTeacher = true>>
+<<goto "Training Camp-TeacherFirstEntered-Experienced-End">>
+<</link>>
+
+:: Training Camp-TeacherFirstEntered-Experienced-End
+<<if $PlayerDefaultAttitude === 3>>
+听见你的回复，他们打了一阵寒颤，立刻找借口溜走了。模样和他们还是你的学生时被抓到偷懒相比有过之而无不及。
+<<elseif $PlayerDefaultAttitude === 4>>
+他们和你简单聊了几句就离开了。
+<<else>>
+他们和你开了几句玩笑，之后挥手离开。
+<</if>>
+你重新回到自己原本的目的上。
+
+[[继续|Training Camp]]

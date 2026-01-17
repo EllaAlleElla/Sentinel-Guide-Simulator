@@ -1,0 +1,204 @@
+:: Player Dormitory
+你正呆在自己的宿舍里。这里是塔统一标准的布置，墙白得刺眼。
+
+目前，这个房间里只有一张标准的单人床、一张标准大小的书桌、一面全身镜和墙上一块连接至塔的个人终端的显示屏。
+
+[[休息|Player Dormitory-Sleep]]
+
+[[看向全身镜|check-player-looking]]
+
+[[查看你的身份资料|player-data]]
+
+<<if $PlayerHaveEnteredTrainingCamp === false>>\
+	<<if $PlayerClass === 0>>\
+		<<link "前往训练区">>\
+			<<set $PlayerHaveEnteredTrainingCamp = true>>
+			<<goto "Training Camp-StudentFirstEntered">>
+		<</link>>\
+	<<elseif $PlayerClass === 3>>\
+		<<link "前往训练区">>\
+			<<set $PlayerHaveEnteredTrainingCamp = true>>
+			<<goto "Training Camp-TeacherFirstEntered">>
+		<</link>>\
+	<<else>>\
+		<<link "前往训练区">>\
+			<<set $PlayerHaveEnteredTrainingCamp = true>>
+			<<goto "Training Camp-NormalFirstEntered">>
+        <</link>>\
+	<</if>>\
+<<else>>\
+	<<link "前往训练区">>\
+		<<goto "Training Camp">>
+	<</link>>\
+<</if>>
+
+[[游戏设置|game-settings]]
+
+:: Player Dormitory-Sleep [autosave]
+你先休息了。
+
+再睁眼时，已经是第二天。
+
+
+[[起床|Player Dormitory]]
+
+:: check-player-looking
+<<if $PlayerEyeColor === "">>
+<span style="opacity: 0.5;">你还没有设置你的外观！先去点击“更改你的外观”这个选项吧。</span>
+<<elseif $PlayerGenderBoy === true and $PlayerSize === 0>>
+你是一个少年。
+
+你有$PlayerHairColor的头发和$PlayerEyeColor的眼睛，以及$PlayerSkinColor的皮肤。
+<<elseif $PlayerGenderBoy === true and $PlayerSize === 1>>
+你是一个青年男性。
+
+你有$PlayerHairColor的头发和$PlayerEyeColor的眼睛，以及$PlayerSkinColor的皮肤。
+<<elseif $PlayerGenderBoy === true and $PlayerSize === 2>>
+你是一个成年男性。
+
+你有$PlayerHairColor的头发和$PlayerEyeColor的眼睛，以及$PlayerSkinColor的皮肤。
+<<elseif $PlayerSize === 0>>
+你是一个少女。
+
+你有$PlayerHairColor的头发和$PlayerEyeColor的眼睛，以及$PlayerSkinColor的皮肤。
+<<elseif $PlayerSize === 1>>
+你是一个青年女性。
+
+你有$PlayerHairColor的头发和$PlayerEyeColor的眼睛，以及$PlayerSkinColor的皮肤。
+<<else>>
+你是一个成年女性。
+
+你有$PlayerHairColor的头发和$PlayerEyeColor的眼睛，以及$PlayerSkinColor的皮肤。
+<</if>>
+
+[[更改你的外观|change-player-looking]]
+
+[[离开全身镜|Player Dormitory]]
+
+:: change-player-looking
+<span style="opacity: 0.5;">你可以在这里自定义你的外观。
+
+所有其他选项都可以留空，但建议填写关于眼睛的形容，因为不填写此数据会导致你无法查看自己的外观。</span>
+
+<<if $PlayerGenderBoy === true>>
+你是一个<<listbox "$PlayerSize">>
+	<<option "少年" 0>>
+	<<option "青年男性" 1>>
+	<<option "成年男性" 2>><</listbox>>
+	<<elseif $PlayerGenderBoy === false>>
+你是一个<<listbox "$PlayerSize">>
+	<<option "少女" 0>>
+	<<option "青年女性" 1>>
+	<<option "成年女性" 2>><</listbox>><</if>>
+
+你有<<textbox "$PlayerHairColor" "">>的头发和<<textbox "$PlayerEyeColor" "">>的眼睛。你的皮肤是<<textbox "$PlayerSkinColor" "">>的。
+
+<<button "确认">>
+	<<goto "check-player-looking">>
+<</button>>
+
+:: player-data
+<<if $PlayerSentinel === true and $PlayerLastName === "">>
+	你是$PlayerName，一个哨兵。
+    
+	你目前在塔内的评级为$PlayerRecordedLevel。
+	<<elseif $PlayerGuide === true and $PlayerLastName === "">>
+	你是$PlayerName，一个向导。
+    
+	你目前在塔内的评级为$PlayerRecordedLevel。
+	<<elseif $PlayerLastName === "">>
+	你是$PlayerName，一个平民。
+	<<elseif $PlayerSentinel === true>>
+	你是$PlayerName·$PlayerLastName，一个哨兵。
+    
+	你目前在塔内的评级为$PlayerRecordedLevel。
+	<<elseif $PlayerGuide === true>>
+	你是$PlayerName·$PlayerLastName，一个向导。
+    
+	你目前在塔内的评级为$PlayerRecordedLevel。
+	<<else>>
+	你是$PlayerName·$PlayerLastName，一个平民。
+<</if>>\
+
+基础能力：
+外貌：<<if $PlayerGenderBoy>>你<<else>>你的长相<</if>>\
+<<if $PlayerGenderBoy>>\
+    <<if $Appearance >= 8000>>面如冠玉<<elseif $Appearance >= 6000>>眉清目秀<<elseif $Appearance >= 4000>>面貌周正<<elseif $Appearance >= 2000>>看起来不错<<else>>平平无奇<</if>>\
+<<else>>\
+    <<if $Appearance >= 8000>>倾世无双<<elseif $Appearance >= 6000>>风华出众<<elseif $Appearance >= 4000>>清秀可观<<elseif $Appearance >= 2000>>还不错<<else>>平平无奇<</if>>\
+<</if>>
+共情力：你\
+<<if $Empathy >= 8000>>对任何人都能感同身受<<elseif $Empathy >= 6000>>心细入微<<elseif $Empathy >= 4000>>善于倾听<<elseif $Empathy >= 2000>>并不冷漠<<else>>难以共感<</if>>
+魅力：\
+<<if $Charisma >= 8000>>你的一举一动都扣人心弦<<elseif $Charisma >= 6000>>人们总是轻易被你吸引<<elseif $Charisma >= 4000>>你谈吐不凡<<elseif $Charisma >= 2000>>你有些讨人喜欢<<else>>你泯然众人<</if>>
+意志力：\
+<<if $Willpower >= 8000>>疼痛和疲惫无法将你压垮<<elseif $Willpower >= 6000>>你有惊人的耐性<<elseif $Willpower >= 4000>>你很坚韧<<elseif $Willpower >= 2000>>你知道忍耐<<else>>你有些懦弱<</if>>
+精神强度：\
+<<if $Resilience >= 8000>>没有什么能让你绝望<<elseif $Resilience >= 6000>>你知道如何消解创伤<<elseif $Resilience >= 4000>>你比别人更加坚强<<elseif $Resilience >= 2000>>你能应对生活<<else>>你精神脆弱<</if>>
+智力：你\
+<<if $Intelligence >= 8000>>洞若观火<<elseif $Intelligence >= 6000>>见微知著<<elseif $Intelligence >= 4000>>机敏过人<<elseif $Intelligence >= 2000>>反应似乎比别人快<<else>>资质平平<</if>>
+感知：你\
+<<if $Perception >= 8000>>一叶知秋<<elseif $Perception >= 6000>>明察秋毫<<elseif $Perception >= 4000>>耳聪目明<<elseif $Perception >= 2000>>更加敏感<<else>>后知后觉<</if>>
+学习力：你\
+<<if $Aptitude >= 8000>>一通百通<<elseif $Aptitude >= 6000>>闻一知十<<elseif $Aptitude >= 4000>>触类旁通<<elseif $Aptitude >= 2000>>偶有进步<<else>>十分平庸<</if>>
+体能：你\
+<<if $Endurance >= 8000>>铁打铜铸<<elseif $Endurance >= 6000>>身强体健<<elseif $Endurance >= 4000>>精力充沛<<elseif $Endurance >= 2000>>体力尚可<<else>>略显孱弱<</if>>
+速度：你\
+<<if $Speed >= 8000>>来去如风<<elseif $Speed >= 6000>>身轻如燕<<elseif $Speed >= 4000>>身手利落<<elseif $Speed >= 2000>>步伐轻快<<else>>平平无奇<</if>>
+力量：你\
+<<if $Strength >= 8000>>力拔山河<<elseif $Strength >= 6000>>身强力壮<<elseif $Strength >= 4000>>臂力过人<<elseif $Strength >= 2000>>有些力气<<else>>力不从心<</if>>
+精神力：\
+<<if $SpiritualPowerLimit >= 8000>>你的精神力深不见底<<elseif $SpiritualPowerLimit >= 6000>>你几乎没有耗尽过精神力<<elseif $SpiritualPowerLimit >= 4000>>你总留有余裕<<elseif $SpiritualPowerLimit >= 2000>>你购买补剂没有其他人频繁<<else>>你的精神力似乎总不够用<</if>>
+
+技能水平：
+精神链接：<<if $PsychicBondSkillLevel >= 80>>S<<elseif $PsychicBondSkillLevel >= 60>>A<<elseif $PsychicBondSkillLevel >= 40>>B<<elseif $PsychicBondSkillLevel >= 20>>C<<else>>D<</if>>
+枪械技巧：<<if $GunSkillLevel >= 80>>S<<elseif $GunSkillLevel >= 60>>A<<elseif $GunSkillLevel >= 40>>B<<elseif $GunSkillLevel >= 20>>C<<else>>D<</if>>
+格斗技巧：<<if $FightSkillLevel >= 80>>S<<elseif $FightSkillLevel >= 60>>A<<elseif $FightSkillLevel >= 40>>B<<elseif $FightSkillLevel >= 20>>C<<else>>D<</if>>
+侦查技巧：<<if $ScoutingSkillLevel >= 80>>S<<elseif $ScoutingSkillLevel >= 60>>A<<elseif $ScoutingSkillLevel >= 40>>B<<elseif $ScoutingSkillLevel >= 20>>C<<else>>D<</if>>
+策略规划：<<if $StrategySkillLevel >= 80>>S<<elseif $StrategySkillLevel >= 60>>A<<elseif $StrategySkillLevel >= 40>>B<<elseif $StrategySkillLevel >= 20>>C<<else>>D<</if>>
+医疗急救：<<if $RescueSkillLevel >= 80>>S<<elseif $RescueSkillLevel >= 60>>A<<elseif $RescueSkillLevel >= 40>>B<<elseif $RescueSkillLevel >= 20>>C<<else>>D<</if>>
+语言沟通：<<if $CommunicateSkillLevel >= 80>>S<<elseif $CommunicateSkillLevel >= 60>>A<<elseif $CommunicateSkillLevel >= 40>>B<<elseif $CommunicateSkillLevel >= 20>>C<<else>>D<</if>>
+情绪控制：<<if $CalmSkillLevel >= 80>>S<<elseif $CalmSkillLevel >= 60>>A<<elseif $CalmSkillLevel >= 40>>B<<elseif $CalmSkillLevel >= 20>>C<<else>>D<</if>>
+<div class="traits-panel">
+    <h3>已获得的特质</h3>\
+    <<if $GainedTraits.length === 0>>\
+        <span>-- 暂无特质 --</span>\
+    <<else>>\
+        <ul>\
+            <<for _i to 0; _i lt $GainedTraits.length; _i++>>\
+                <<set _traitKey to $GainedTraits[_i]>>\
+                <li>\
+                    /* 从 setup 对象中获取对应的中文名 */\
+                    <<if setup.traits[_traitKey]>>\
+                        <strong><<= setup.traits[_traitKey].name>></strong>\
+                    <<else>>\
+                        _traitKey (未知特质)\
+                    <</if>>\
+                </li>\
+            <</for>>\
+        </ul>\
+    <</if>>\
+</div>\
+
+<<if $SpiritAnimalName === "">>
+你有一$SpiritAnimalWord$SpiritAnimalClass精神体，它没有名字。
+<<else>>\
+你的精神体是一$SpiritAnimalWord名叫$SpiritAnimalName的$SpiritAnimalClass。
+<</if>>\
+
+它\
+<<switch $SpiritAnimalMoving>><<case 0>>靠足行走<<case 1>>靠翼飞行<<case 2>>靠游泳行动<<case 3>>蜿蜒爬行<<case 4>>靠触手攀爬<<case 5>>靠特殊的方式移动<</switch>>，并且\
+<<if $SpiritAnimalFloating>>可以漂浮在空中<<else>>不能漂浮在空中<</if>>。
+
+它\
+<<switch $SpiritAnimalAbility>><<case 0>>可以靠毒素致伤<<case 1>>可以靠电流致伤<<case 2>>可以致幻敌人<<case 3>>可以麻痹敌人<<case 4>>没有特别的能力<</switch>>，\
+<<if $SpiritAnimalLegend>>并且还是传说现世<<else>>尽管它不是传说中的生物，它也很厉害<</if>>。
+
+它\
+<<if $SpiritAnimalAttack>>有<<else>>没有<</if>>正面作战的能力，\
+<<if $SpiritAnimalAssassin>>能够<<else>>不能<</if>>潜入作战，\
+<<if $SpiritAnimalScout>>可以<<else>>不能<</if>>执行侦查任务，\
+<<switch $SpiritAnimalHeal>><<case 0>>没有治愈能力<<case 1>>可以治愈身体创伤<<case 2>>可以治愈精神创伤<<case 3>>身体和精神的创伤都可以治愈<</switch>>。
+
+
+[[关闭个人资料页面|Player Dormitory]]
